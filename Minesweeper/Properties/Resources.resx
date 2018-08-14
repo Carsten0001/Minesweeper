@@ -121,6 +121,9 @@
   <data name="Eight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Eight.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Explosion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Explosion.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Five" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Five.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -130,8 +133,14 @@
   <data name="Four" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Four.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Mine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mine.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="None" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\None.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Null" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Null.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="One" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\One.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
