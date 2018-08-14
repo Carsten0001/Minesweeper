@@ -7,7 +7,7 @@
         xmlns:GameModeAlias="clr-namespace:Minesweeper.Model"
         xmlns:ViewModels="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.GameWindow"
         mc:Ignorable="d"
-        Title="Minesweeper" Height="600" Width="400">
+        Title="Minesweeper" Height="600" Width="400" SizeToContent="WidthAndHeight">
     <Window.DataContext>
         <ViewModels:GameViewModel/>
     </Window.DataContext>
@@ -29,10 +29,10 @@
             <RowDefinition Height="8*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding Tiles}" Margin="0" Padding="0">
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding Tiles}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Margin ="0" Rows="{Binding SizeX}" Columns="{Binding SizeY}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <UniformGrid Rows="{Binding SizeX}" Columns="{Binding SizeY}" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

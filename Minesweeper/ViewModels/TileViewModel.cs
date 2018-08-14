@@ -43,6 +43,8 @@ namespace Minesweeper.ViewModels
 
         #region Commanding
         private ICommand _toggleButtonStateCommand;
+        private ICommand _markTile;
+
         public ICommand ToggleButtonStateCommand
         {
             get
@@ -56,12 +58,25 @@ namespace Minesweeper.ViewModels
                 return _toggleButtonStateCommand;
             }
         }
+
+        public ICommand MarkTile
+        {
+            get
+            {
+                if(_markTile == null)
+                {
+                    _markTile = new RelayCommand(
+                        p => CanMarkTile,
+                        p => DoMarkTile());
+                }
+                return _markTile;
+            }
+        }
         #endregion
         #region Methods
         private bool CanToggleButtonState => true;
         private void DoToggleButtonState()
         {
-            Console.WriteLine(HasMine);
             if (HasMine)
             {
                 TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Explosion];
@@ -70,6 +85,23 @@ namespace Minesweeper.ViewModels
             else
             {
                 MinesCore.Instance.OpenField(Id);
+            }
+        }
+
+        private bool CanMarkTile => true;
+        private void DoMarkTile()
+        {
+            if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.None])
+            {
+                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Flag];
+            }
+            else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Flag])
+            {
+                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Questionmark];
+            }
+            else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Questionmark])
+            {
+                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.None];
             }
         }
         #endregion

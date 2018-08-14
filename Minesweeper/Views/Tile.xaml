@@ -12,6 +12,9 @@
     <StackPanel>
         <Button Focusable="False" Command="{Binding ToggleButtonStateCommand}" Height="50" Width="50">
             <Image Source="{Binding TileStateImage}" Margin="0"/>
+            <Button.InputBindings>
+                <MouseBinding Gesture="RightClick" Command="{Binding MarkTile}"/>
+            </Button.InputBindings>
         </Button>
     </StackPanel>
 </UserControl>
