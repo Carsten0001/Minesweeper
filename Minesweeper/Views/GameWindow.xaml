@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:GameModeAlias="clr-namespace:Minesweeper.Model"
-        xmlns:ViewModels="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.GameWindow"
+        xmlns:ViewModel="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.GameWindow"
+        xmlns:Converter="clr-namespace:Minesweeper.Converters"
         mc:Ignorable="d"
         Title="Minesweeper" Height="600" Width="400" SizeToContent="WidthAndHeight">
     <Window.DataContext>
-        <ViewModels:GameViewModel/>
+        <ViewModel:GameViewModel/>
     </Window.DataContext>
     <Window.Resources>
+        <Converter:GameModeToBooleanConverter x:Key="gameModeToBooleanConverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <ObjectDataProvider x:Key="GameModeEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -53,13 +55,50 @@
                 <Label Grid.Row="0" Grid.Column="0" Content="Game Mode"/>
                 <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={StaticResource GameModeEnum}}" SelectedItem="{Binding SelectedGameMode}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}"/>
                 <Label Grid.Row="1" Grid.Column="0" Content="Difficulty"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DifficultyEnum}}" SelectedItem="{Binding SelectedDifficulty}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DifficultyEnum}}" SelectedItem="{Binding SelectedDifficulty}">
+                    <ComboBox.IsEnabled>
+                        <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}" ConverterParameter="Difficulty">
+                            <Binding Path="IsNotRunning" Mode="OneWay"/>
+                            <Binding Path="SelectedGameMode"/>
+                        </MultiBinding>
+                    </ComboBox.IsEnabled>
+                </ComboBox>
                 <Label Grid.Row="2" Grid.Column="0" Content="Number of Rows"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SizeX, Mode=OneWayToSource}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SizeX}" VerticalContentAlignment="Center">
+                    <TextBox.IsEnabled>
+                        <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
+                            <Binding Path="IsNotRunning" Mode="OneWay"/>
+                            <Binding Path="SelectedGameMode"/>
+                        </MultiBinding>
+                    </TextBox.IsEnabled>
+                </TextBox>
                 <Label Grid.Row="3" Grid.Column="0" Content="Number of Columns"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SizeY, Mode=OneWayToSource}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SizeY}" VerticalContentAlignment="Center">
+                    <TextBox.IsEnabled>
+                        <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
+                            <Binding Path="IsNotRunning" Mode="OneWay"/>
+                            <Binding Path="SelectedGameMode"/>
+                        </MultiBinding>
+                    </TextBox.IsEnabled>
+                </TextBox>
                 <Label Grid.Row="4" Grid.Column="0" Content="Number of Mines"/>
-                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding NumberOfMines}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}"/>
+                <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20.0"/>
+                        <ColumnDefinition Width="15.0"/>
+                        <ColumnDefinition Width="20.0"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding FlaggedMinesCounter}" IsEnabled="False" TextAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Grid.Column="1" Content="/"  HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"/>
+                    <TextBox Grid.Column="2" Text="{Binding NumberOfMines}" TextAlignment="Center" VerticalContentAlignment="Center">
+                        <TextBox.IsEnabled>
+                            <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
+                                <Binding Path="IsNotRunning" Mode="OneWay"/>
+                                <Binding Path="SelectedGameMode"/>
+                            </MultiBinding>
+                        </TextBox.IsEnabled>
+                    </TextBox>
+                </Grid>
             </Grid>
         </StackPanel>
     </Grid>

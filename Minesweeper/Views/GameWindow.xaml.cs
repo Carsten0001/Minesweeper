@@ -20,6 +20,9 @@ namespace Minesweeper
     /// </summary>
     public partial class GameWindow : Window
     {
+        /// <summary>
+        /// Standard Constructor of the main game view
+        /// </summary>
         public GameWindow()
         {
             InitializeComponent();           

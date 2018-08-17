@@ -20,6 +20,9 @@ namespace Minesweeper
     /// </summary>
     public partial class Tile : UserControl
     {
+        /// <summary>
+        /// Standard Constructor of the tile view
+        /// </summary>
         public Tile()
         {
             InitializeComponent();
