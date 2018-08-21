@@ -29,11 +29,12 @@ namespace Minesweeper.Model
         private int _sizeY;
         private ObservableCollection<Tile> _tiles;
         #endregion
+
+        #region Properties 
         /// <summary>
         /// Indicates if the game is over
         /// Default is true
         /// </summary>
-        #region Properties
         public bool GameOver { get; set; } = true;
         /// <summary>
         /// Number of Mines
