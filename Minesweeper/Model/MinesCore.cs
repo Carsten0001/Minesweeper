@@ -730,8 +730,8 @@ namespace Minesweeper.Model
 
     internal class Unsubscriber<MineData> : IDisposable
     {
-        private List<IObserver<MineData>> _observers;
-        private IObserver<MineData> _observer;
+        private readonly List<IObserver<MineData>> _observers;
+        private readonly IObserver<MineData> _observer;
 
         internal Unsubscriber(List<IObserver<MineData>> observers, IObserver<MineData> observer)
         {
