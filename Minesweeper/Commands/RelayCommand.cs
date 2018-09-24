@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Minesweeper.Commands
 {
     class RelayCommand : ICommand
     {
-        private Predicate<object> _canExecute;
-        private Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
+        private readonly Action<object> _execute;
 
         public RelayCommand(Predicate<object> canExecute, Action<object> execute)
         {
