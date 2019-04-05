@@ -1,9 +1,5 @@
 ﻿using Minesweeper.Commands;
 using Minesweeper.Model;
-using Minesweeper.Properties;
-using System;
-using System.Drawing;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 

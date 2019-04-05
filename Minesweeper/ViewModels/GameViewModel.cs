@@ -2,7 +2,6 @@
 using Minesweeper.Model;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Minesweeper.ViewModels
@@ -108,7 +107,7 @@ namespace Minesweeper.ViewModels
         protected void DoStartGame()
         {
             Tiles = new ObservableCollection<Tile>();
-            
+
             MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
             Subscribe(MinesCore.Instance);
             FlaggedMinesCounter = NumberOfMines;

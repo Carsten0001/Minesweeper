@@ -24,7 +24,6 @@ namespace Minesweeper.Model
         private static List<IObserver<MineData>> _observers;
         private static MineData _mineData;
         private static readonly Lazy<MinesCore> _lazy = new Lazy<MinesCore>(() => new MinesCore());
-        private int _numberOfTiles;
         private int _sizeX;
         private int _sizeY;
         private ObservableCollection<Tile> _tiles;
@@ -97,7 +96,10 @@ namespace Minesweeper.Model
         /// <param name="tiles"></param>
         public void StartGame(GameMode gameMode, Difficulty difficulty, int sizeX, int sizeY, int? numberOfMines, ref ObservableCollection<Tile> tiles)
         {
-            _observers = new List<IObserver<MineData>>();
+            if (_observers == null)
+            {
+                _observers = new List<IObserver<MineData>>();
+            }
             if (gameMode == GameMode.Standard)
             {
                 switch (difficulty)
@@ -114,7 +116,6 @@ namespace Minesweeper.Model
             }
             _tiles = tiles;
 
-            _numberOfTiles = sizeX * sizeY;
             if (gameMode == GameMode.Standard && GameOver)
             {
                 switch (difficulty)
@@ -134,6 +135,7 @@ namespace Minesweeper.Model
             else if (gameMode == GameMode.Custom && GameOver && numberOfMines != null)
             {
                 NumberOfMines = numberOfMines.Value;
+                GameOver = false;
             }
             _mineData = new MineData(NumberOfMines, FlaggedMinesCounter, _sizeX, _sizeY, GameOver);
             UpdateObservers();
@@ -152,11 +154,9 @@ namespace Minesweeper.Model
             var result = MessageBox.Show("You LOST!!! Wanna Restart?", "Fatal FAIL", MessageBoxButton.YesNo);
             switch (result)
             {
-                case MessageBoxResult.Yes: GameOver = false; _mineData = new MineData(NumberOfMines, FlaggedMinesCounter, _sizeX, _sizeY, GameOver); UpdateObservers(); break;
+                case MessageBoxResult.Yes: GameOver = false; UpdateObservers(); break;
                 case MessageBoxResult.No:; break;
-                default:; break;
             }
-            UpdateObservers();
         }
         /// <summary>
         /// Subscribs to Observer list
@@ -606,7 +606,13 @@ namespace Minesweeper.Model
             }
             if (counter == _sizeX * _sizeY - NumberOfMines)
             {
-                MessageBox.Show("You won!!!");
+                var result = MessageBox.Show("You Win!!! Wanna Restart?", "Awesome Job", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes: GameOver = false; _mineData = new MineData(NumberOfMines, FlaggedMinesCounter, _sizeX, _sizeY, GameOver); UpdateObservers(); break;
+                    case MessageBoxResult.No:; break;
+                    default:; break;
+                }
             }
 
         }
