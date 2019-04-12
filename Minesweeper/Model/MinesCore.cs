@@ -96,17 +96,13 @@ namespace Minesweeper.Model
         /// <param name="tiles"></param>
         public void StartGame(GameMode gameMode, Difficulty difficulty, int sizeX, int sizeY, int? numberOfMines, ref ObservableCollection<Tile> tiles)
         {
-            if (_observers == null)
-            {
-                _observers = new List<IObserver<MineData>>();
-            }
             if (gameMode == GameMode.Standard)
             {
                 switch (difficulty)
                 {
                     case Difficulty.Easy: _sizeX = _sizeY = 8; break;
                     case Difficulty.Normal: _sizeX = _sizeY = 16; break;
-                    case Difficulty.Hard: _sizeX = 16; _sizeY = 30; break;
+                    case Difficulty.Hard: _sizeX = 30; _sizeY = 16; break;
                 }
             }
             else
@@ -137,7 +133,6 @@ namespace Minesweeper.Model
                 NumberOfMines = numberOfMines.Value;
                 GameOver = false;
             }
-            _mineData = new MineData(NumberOfMines, FlaggedMinesCounter, _sizeX, _sizeY, GameOver);
             UpdateObservers();
         }
         /// <summary>
@@ -204,7 +199,8 @@ namespace Minesweeper.Model
             {
                 return;
             }
-            var newID = -1;
+
+            int newID;
             // Upper Left Corner
             if (id == 0)
             {

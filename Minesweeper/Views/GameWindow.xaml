@@ -34,7 +34,7 @@
         <ItemsControl Grid.Row="0" ItemsSource="{Binding Tiles}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding SizeX}" Columns="{Binding SizeY}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <UniformGrid Rows="{Binding SizeY}" Columns="{Binding SizeX}" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
