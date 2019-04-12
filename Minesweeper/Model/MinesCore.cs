@@ -27,6 +27,7 @@ namespace Minesweeper.Model
         private int _sizeX;
         private int _sizeY;
         private ObservableCollection<Tile> _tiles;
+        private int _flaggedMinesCounter;
         #endregion
 
         #region Properties 
@@ -43,7 +44,18 @@ namespace Minesweeper.Model
         /// <summary>
         /// Countes the Mines beeing flagged
         /// </summary>
-        public int FlaggedMinesCounter { get; set; }
+        public int FlaggedMinesCounter
+        {
+            get
+            {
+                return _flaggedMinesCounter;
+            }
+            set
+            {
+                _flaggedMinesCounter = value;
+                UpdateObservers();
+            }
+        }
 
         /// <summary>
         /// A Collection of all the Images which can be displayed on a Tile

@@ -110,7 +110,7 @@ namespace Minesweeper.ViewModels
 
             MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
             Subscribe(MinesCore.Instance);
-            FlaggedMinesCounter = NumberOfMines;
+            //FlaggedMinesCounter = NumberOfMines;
             FillTilesCollection();
            
             IsNotRunning = false;

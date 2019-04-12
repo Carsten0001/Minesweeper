@@ -111,12 +111,12 @@ namespace Minesweeper.ViewModels
             if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.None])
             {
                 TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Flag];
-                MinesCore.Instance.FlaggedMinesCounter--;
+                MinesCore.Instance.FlaggedMinesCounter++;
             }
             else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Flag])
             {
                 TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Questionmark];
-                MinesCore.Instance.FlaggedMinesCounter++;
+                MinesCore.Instance.FlaggedMinesCounter--;
             }
             else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Questionmark])
             {

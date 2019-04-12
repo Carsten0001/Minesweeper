@@ -89,7 +89,7 @@
                         <ColumnDefinition Width="20.0"/>
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Column="0" Text="{Binding FlaggedMinesCounter}" IsEnabled="False" TextAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Grid.Column="1" Content="/"  HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"/>
+                    <Label Grid.Column="1" Content="/" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBox Grid.Column="2" Text="{Binding NumberOfMines}" TextAlignment="Center" VerticalContentAlignment="Center">
                         <TextBox.IsEnabled>
                             <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
