@@ -25,6 +25,14 @@
                 <x:Type TypeName="GameModeAlias:Difficulty"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="Black"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="LightGray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -55,7 +63,7 @@
                 <Label Grid.Row="0" Grid.Column="0" Content="Game Mode"/>
                 <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={StaticResource GameModeEnum}}" SelectedItem="{Binding SelectedGameMode}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}"/>
                 <Label Grid.Row="1" Grid.Column="0" Content="Difficulty"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DifficultyEnum}}" SelectedItem="{Binding SelectedDifficulty}">
+                <ComboBox Name="DifficultyComboBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DifficultyEnum}}" SelectedItem="{Binding SelectedDifficulty}" IsTextSearchCaseSensitive="True">
                     <ComboBox.IsEnabled>
                         <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}" ConverterParameter="Difficulty">
                             <Binding Path="IsNotRunning" Mode="OneWay"/>
