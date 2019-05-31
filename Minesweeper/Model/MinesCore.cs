@@ -161,7 +161,7 @@ namespace Minesweeper.Model
             var result = MessageBox.Show("You LOST!!! Wanna Restart?", "Fatal FAIL", MessageBoxButton.YesNo);
             switch (result)
             {
-                case MessageBoxResult.Yes: GameOver = false; UpdateObservers(); break;
+                case MessageBoxResult.Yes: UpdateObservers(); GameOver = false; break;
                 case MessageBoxResult.No:; break;
             }
         }
