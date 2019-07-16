@@ -7,8 +7,9 @@
         xmlns:GameModeAlias="clr-namespace:Minesweeper.Model"
         xmlns:ViewModel="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.GameWindow"
         xmlns:Converter="clr-namespace:Minesweeper.Converters"
+        xmlns:c="clr-namespace:Minesweeper.Validators"
         mc:Ignorable="d"
-        Title="Minesweeper" Height="600" Width="400" SizeToContent="WidthAndHeight">
+        Title="Minesweeper" SizeToContent="WidthAndHeight" SnapsToDevicePixels="True" MaxHeight="{Binding MainViewMaxHeight}" MaxWidth="{Binding MainViewMaxWidth}">
     <Window.DataContext>
         <ViewModel:GameViewModel/>
     </Window.DataContext>
@@ -33,20 +34,29 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="3*"/>
-        </Grid.RowDefinitions>
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding Tiles}">
+    <StackPanel>
+        <ItemsControl ItemsSource="{Binding Tiles}" IsEnabled="{Binding IsPlaygroundUnlocked}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding SizeY}" Columns="{Binding SizeX}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <UniformGrid Rows="{Binding SizeY}" Columns="{Binding SizeX}" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <StackPanel Grid.Row="1">
+        <StackPanel>
             <Button Content="{Binding StartButtonContent}" Visibility="{Binding IsNotRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding StartGame}" />
             <Grid>
                 <Grid.RowDefinitions>
@@ -72,7 +82,14 @@
                     </ComboBox.IsEnabled>
                 </ComboBox>
                 <Label Grid.Row="2" Grid.Column="0" Content="Number of Rows"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SizeX}" VerticalContentAlignment="Center">
+                <TextBox Grid.Row="2" Grid.Column="1" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}" VerticalContentAlignment="Center">
+                    <TextBox.Text>
+                        <Binding Path="SizeY" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue"/>
+                            </Binding.ValidationRules>    
+                        </Binding>
+                    </TextBox.Text>
                     <TextBox.IsEnabled>
                         <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
                             <Binding Path="IsNotRunning" Mode="OneWay"/>
@@ -81,7 +98,14 @@
                     </TextBox.IsEnabled>
                 </TextBox>
                 <Label Grid.Row="3" Grid.Column="0" Content="Number of Columns"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SizeY}" VerticalContentAlignment="Center">
+                <TextBox Grid.Row="3" Grid.Column="1" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}" VerticalContentAlignment="Center">
+                    <TextBox.Text>
+                        <Binding Path="SizeX" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
                     <TextBox.IsEnabled>
                         <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
                             <Binding Path="IsNotRunning" Mode="OneWay"/>
@@ -109,5 +133,5 @@
                 </Grid>
             </Grid>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>

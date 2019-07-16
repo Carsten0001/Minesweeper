@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModels="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.Tile"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="50">
+             d:DesignHeight="32" d:DesignWidth="32" HorizontalAlignment="Left" VerticalAlignment="Top">
     <UserControl.DataContext>
         <ViewModels:TileViewModel/>
     </UserControl.DataContext>
     <StackPanel>
-        <Button Focusable="False" Command="{Binding ToggleButtonStateCommand}" Height="50" Width="50">
-            <Image Source="{Binding TileStateImage}" Margin="0"/>
+        <Button Focusable="False" Command="{Binding ToggleButtonStateCommand}" Height="32" Width="32">
+            <Image Source="{Binding TileStateImage}" Stretch="UniformToFill"/>
             <Button.InputBindings>
                 <MouseBinding Gesture="RightClick" Command="{Binding MarkTile}"/>
             </Button.InputBindings>

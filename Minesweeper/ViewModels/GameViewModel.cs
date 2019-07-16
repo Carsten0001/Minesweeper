@@ -12,11 +12,14 @@ namespace Minesweeper.ViewModels
     class GameViewModel : BindableBase, IObserver<MineData>
     {
         #region Fields
+        private double _mainViewMaxWidth = System.Windows.SystemParameters.MaximizedPrimaryScreenWidth;
+        private double _mainViewMaxHeight = System.Windows.SystemParameters.MaximizedPrimaryScreenHeight;
         private int _sizeX;
         private int _sizeY;
         private int _numberOfMines = 0;
         private int _flaggedMinesCounter = 0;
         private bool _isNotRunning = true;
+        private bool _isPlaygroundUnlocked = true;
         private ObservableCollection<Tile> _tiles;
         private ObservableCollection<GameMode> _gameModes;
         private GameMode _selectedGameMode = GameMode.Standard;
@@ -26,6 +29,19 @@ namespace Minesweeper.ViewModels
 
         #region Properties
         public string StartButtonContent { get; set; } = "Start";
+
+        public double MainViewMaxHeight
+        {
+            get => _mainViewMaxHeight;
+            set => SetProperty(ref _mainViewMaxHeight, value);
+        }
+
+        public double MainViewMaxWidth
+        {
+            get => _mainViewMaxWidth;
+            set => SetProperty(ref _mainViewMaxWidth, value);
+        }
+
         public int SizeX
         {
             get => _sizeX;
@@ -56,6 +72,12 @@ namespace Minesweeper.ViewModels
             set => SetProperty(ref _isNotRunning, value);
         }
 
+        public bool IsPlaygroundUnlocked
+        {
+            get => _isPlaygroundUnlocked;
+            set => SetProperty(ref _isPlaygroundUnlocked, value);
+        }
+
         public ObservableCollection<Tile> Tiles
         {
             get => _tiles;
@@ -79,6 +101,8 @@ namespace Minesweeper.ViewModels
             get => _selectedDifficulty;
             set => SetProperty(ref _selectedDifficulty, value);
         }
+
+        
         #endregion
 
         #region Commanding
@@ -99,6 +123,12 @@ namespace Minesweeper.ViewModels
         #endregion
 
         #region Methods
+        public GameViewModel()
+        {
+            MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
+            Subscribe(MinesCore.Instance);
+        }
+
         /// <summary>
         /// Starts the Game. Calls <see cref="StartGame()"/>. 
         /// Calls <see cref="Subscribe(MinesCore)"/>
@@ -106,6 +136,10 @@ namespace Minesweeper.ViewModels
         /// </summary>
         protected void DoStartGame()
         {
+            if (_cancellation != null)
+            {
+                Unsubscribe();
+            }
             Tiles = new ObservableCollection<Tile>();
 
             MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
@@ -114,6 +148,7 @@ namespace Minesweeper.ViewModels
             FillTilesCollection();
            
             IsNotRunning = false;
+            _isPlaygroundUnlocked = true;
         }
 
         /// <summary>
@@ -148,8 +183,8 @@ namespace Minesweeper.ViewModels
         private void Reset()
         {
             Tiles.Clear();
-            _isNotRunning = true;
-            Unsubscribe();
+            IsNotRunning = true;
+            //Unsubscribe();
         }
 
         /// <summary>
@@ -180,6 +215,7 @@ namespace Minesweeper.ViewModels
             SizeY = value.SizeY;
             if (value.GameOver)
             {
+                _isPlaygroundUnlocked = true;
                 Reset();
             }
         }
@@ -194,7 +230,7 @@ namespace Minesweeper.ViewModels
             throw new NotImplementedException();
         }
 
-        private bool CanStartGame => true;
+        private bool CanStartGame => SizeX > 0 && SizeX <= 28 && SizeY > 0 && SizeY <= 28;
         #endregion
     }
 }
