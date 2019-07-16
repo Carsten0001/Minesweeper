@@ -12,6 +12,8 @@ namespace Minesweeper.ViewModels
     class GameViewModel : BindableBase, IObserver<MineData>
     {
         #region Fields
+        private double _mainViewMaxWidth = System.Windows.SystemParameters.MaximizedPrimaryScreenWidth;
+        private double _mainViewMaxHeight = System.Windows.SystemParameters.MaximizedPrimaryScreenHeight;
         private int _sizeX;
         private int _sizeY;
         private int _numberOfMines = 0;
@@ -27,6 +29,18 @@ namespace Minesweeper.ViewModels
 
         #region Properties
         public string StartButtonContent { get; set; } = "Start";
+
+        public double MainViewMaxHeight
+        {
+            get => _mainViewMaxHeight;
+            set => SetProperty(ref _mainViewMaxHeight, value);
+        }
+
+        public double MainViewMaxWidth
+        {
+            get => _mainViewMaxWidth;
+            set => SetProperty(ref _mainViewMaxWidth, value);
+        }
 
         public int SizeX
         {
@@ -111,7 +125,8 @@ namespace Minesweeper.ViewModels
         #region Methods
         public GameViewModel()
         {
- 
+            MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
+            Subscribe(MinesCore.Instance);
         }
 
         /// <summary>
@@ -132,7 +147,7 @@ namespace Minesweeper.ViewModels
             //FlaggedMinesCounter = NumberOfMines;
             FillTilesCollection();
            
-            _isNotRunning = false;
+            IsNotRunning = false;
             _isPlaygroundUnlocked = true;
         }
 
@@ -168,7 +183,7 @@ namespace Minesweeper.ViewModels
         private void Reset()
         {
             Tiles.Clear();
-            _isNotRunning = true;
+            IsNotRunning = true;
             //Unsubscribe();
         }
 

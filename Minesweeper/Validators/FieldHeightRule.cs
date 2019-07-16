@@ -1,6 +1,7 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Reflection;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Minesweeper.Validators
 {
@@ -27,19 +28,9 @@ namespace Minesweeper.Validators
         /// <returns>ValidationResult</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            int sizeY = 0;
+            int sizeXY = (int)GetBoundValue(value);
 
-            try
-            {
-                if (((string)value).Length > 0)
-                    sizeY = int.Parse((string)value);
-            }
-            catch (Exception e)
-            {
-                return new ValidationResult(false, $"Illegal characters or { e.Message }");
-            }
-
-            if ((sizeY < Min) || (sizeY > Max))
+            if ((sizeXY < Min) || (sizeXY > Max))
             {
                 return new ValidationResult(false,
                   $"Please enter a number in the range: { Min } - { Max } .");
@@ -47,6 +38,31 @@ namespace Minesweeper.Validators
             else
             {
                 return ValidationResult.ValidResult;
+            }
+        }
+
+        private object GetBoundValue(object value)
+        {
+            // ValidationStep was UpdatedValue or CommittedValue (Validate after setting)
+            // Need to pull the value out of the BindingExpression.
+            if (value is BindingExpression binding)
+            {
+
+                // Get the bound object and name of the property
+                string resolvedPropertyName = binding.GetType().GetProperty("ResolvedSourcePropertyName", BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance).GetValue(binding, null).ToString();
+                object resolvedSource = binding.GetType().GetProperty("ResolvedSource", BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance).GetValue(binding, null);
+
+                // Extract the value of the property
+                object propertyValue = resolvedSource.GetType().GetProperty(resolvedPropertyName).GetValue(resolvedSource, null);
+
+                // This is what we want.
+                return propertyValue;
+            }
+            else
+            {
+                // ValidationStep was RawProposedValue or ConvertedProposedValue
+                // The argument is already what we want!
+                return value;
             }
         }
     }

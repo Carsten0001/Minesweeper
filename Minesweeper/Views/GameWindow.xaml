@@ -7,9 +7,9 @@
         xmlns:GameModeAlias="clr-namespace:Minesweeper.Model"
         xmlns:ViewModel="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.GameWindow"
         xmlns:Converter="clr-namespace:Minesweeper.Converters"
-    xmlns:c="clr-namespace:Minesweeper.Validators"
-    mc:Ignorable="d"
-        Title="Minesweeper" Height="600" Width="400" SizeToContent="WidthAndHeight">
+        xmlns:c="clr-namespace:Minesweeper.Validators"
+        mc:Ignorable="d"
+        Title="Minesweeper" SizeToContent="WidthAndHeight" SnapsToDevicePixels="True" MaxHeight="{Binding MainViewMaxHeight}" MaxWidth="{Binding MainViewMaxWidth}">
     <Window.DataContext>
         <ViewModel:GameViewModel/>
     </Window.DataContext>
@@ -48,19 +48,15 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="3*"/>
-        </Grid.RowDefinitions>
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding Tiles}" IsEnabled="{Binding IsPlaygroundUnlocked}">
+    <StackPanel>
+        <ItemsControl ItemsSource="{Binding Tiles}" IsEnabled="{Binding IsPlaygroundUnlocked}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding SizeY}" Columns="{Binding SizeX}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <UniformGrid Rows="{Binding SizeY}" Columns="{Binding SizeX}" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <StackPanel Grid.Row="1">
+        <StackPanel>
             <Button Content="{Binding StartButtonContent}" Visibility="{Binding IsNotRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding StartGame}" />
             <Grid>
                 <Grid.RowDefinitions>
@@ -90,7 +86,7 @@
                     <TextBox.Text>
                         <Binding Path="SizeY" Mode="TwoWay">
                             <Binding.ValidationRules>
-                                <c:FieldHeightWidthRule Min="1" Max="30"/>
+                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue"/>
                             </Binding.ValidationRules>    
                         </Binding>
                     </TextBox.Text>
@@ -106,7 +102,7 @@
                     <TextBox.Text>
                         <Binding Path="SizeX" Mode="TwoWay">
                             <Binding.ValidationRules>
-                                <c:FieldHeightWidthRule Min="1" Max="30"/>
+                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -137,5 +133,5 @@
                 </Grid>
             </Grid>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>
