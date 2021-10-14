@@ -11,39 +11,39 @@
         mc:Ignorable="d"
         Title="Minesweeper" SizeToContent="WidthAndHeight" SnapsToDevicePixels="True" MaxHeight="{Binding MainViewMaxHeight}" MaxWidth="{Binding MainViewMaxWidth}">
     <Window.DataContext>
-        <ViewModel:GameViewModel/>
+        <ViewModel:GameViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <Converter:GameModeToBooleanConverter x:Key="gameModeToBooleanConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Converter:GameModeToBooleanConverter x:Key="gameModeToBooleanConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ObjectDataProvider x:Key="GameModeEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="GameModeAlias:GameMode"/>
+                <x:Type TypeName="GameModeAlias:GameMode" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <ObjectDataProvider x:Key="DifficultyEnum" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="GameModeAlias:Difficulty"/>
+                <x:Type TypeName="GameModeAlias:Difficulty" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <Style TargetType="ComboBox">
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="Black" />
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="LightGray"/>
+                    <Setter Property="Foreground" Value="LightGray" />
                 </Trigger>
             </Style.Triggers>
         </Style>
         <ControlTemplate x:Key="validationTemplate">
             <DockPanel>
                 <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
-                <AdornedElementPlaceholder/>
+                <AdornedElementPlaceholder />
             </DockPanel>
         </ControlTemplate>
         <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -52,7 +52,7 @@
         <ItemsControl ItemsSource="{Binding Tiles}" IsEnabled="{Binding IsPlaygroundUnlocked}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding SizeY}" Columns="{Binding SizeX}" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False"/>
+                    <UniformGrid Rows="{Binding SizeY}" Columns="{Binding SizeX}" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
@@ -60,73 +60,73 @@
             <Button Content="{Binding StartButtonContent}" Visibility="{Binding IsNotRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding StartGame}" />
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".4*"/>
-                    <ColumnDefinition Width=".6*"/>
+                    <ColumnDefinition Width=".4*" />
+                    <ColumnDefinition Width=".6*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Game Mode"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={StaticResource GameModeEnum}}" SelectedItem="{Binding SelectedGameMode}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}"/>
-                <Label Grid.Row="1" Grid.Column="0" Content="Difficulty"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="Game Mode" />
+                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={StaticResource GameModeEnum}}" SelectedItem="{Binding SelectedGameMode}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}" />
+                <Label Grid.Row="1" Grid.Column="0" Content="Difficulty" />
                 <ComboBox Name="DifficultyComboBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DifficultyEnum}}" SelectedItem="{Binding SelectedDifficulty}" IsTextSearchCaseSensitive="True">
                     <ComboBox.IsEnabled>
                         <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}" ConverterParameter="Difficulty">
-                            <Binding Path="IsNotRunning" Mode="OneWay"/>
-                            <Binding Path="SelectedGameMode"/>
+                            <Binding Path="IsNotRunning" Mode="OneWay" />
+                            <Binding Path="SelectedGameMode" />
                         </MultiBinding>
                     </ComboBox.IsEnabled>
                 </ComboBox>
-                <Label Grid.Row="2" Grid.Column="0" Content="Number of Rows"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Number of Rows" />
                 <TextBox Grid.Row="2" Grid.Column="1" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}" VerticalContentAlignment="Center">
                     <TextBox.Text>
                         <Binding Path="SizeY" Mode="TwoWay">
                             <Binding.ValidationRules>
-                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue"/>
-                            </Binding.ValidationRules>    
-                        </Binding>
-                    </TextBox.Text>
-                    <TextBox.IsEnabled>
-                        <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
-                            <Binding Path="IsNotRunning" Mode="OneWay"/>
-                            <Binding Path="SelectedGameMode"/>
-                        </MultiBinding>
-                    </TextBox.IsEnabled>
-                </TextBox>
-                <Label Grid.Row="3" Grid.Column="0" Content="Number of Columns"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}" VerticalContentAlignment="Center">
-                    <TextBox.Text>
-                        <Binding Path="SizeX" Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue"/>
+                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                     <TextBox.IsEnabled>
                         <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
-                            <Binding Path="IsNotRunning" Mode="OneWay"/>
-                            <Binding Path="SelectedGameMode"/>
+                            <Binding Path="IsNotRunning" Mode="OneWay" />
+                            <Binding Path="SelectedGameMode" />
                         </MultiBinding>
                     </TextBox.IsEnabled>
                 </TextBox>
-                <Label Grid.Row="4" Grid.Column="0" Content="Number of Mines"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Number of Columns" />
+                <TextBox Grid.Row="3" Grid.Column="1" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}" VerticalContentAlignment="Center">
+                    <TextBox.Text>
+                        <Binding Path="SizeX" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <c:FieldHeightWidthRule Min="1" Max="28" ValidationStep="CommittedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                    <TextBox.IsEnabled>
+                        <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
+                            <Binding Path="IsNotRunning" Mode="OneWay" />
+                            <Binding Path="SelectedGameMode" />
+                        </MultiBinding>
+                    </TextBox.IsEnabled>
+                </TextBox>
+                <Label Grid.Row="4" Grid.Column="0" Content="Number of Mines" />
                 <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20.0"/>
-                        <ColumnDefinition Width="15.0"/>
-                        <ColumnDefinition Width="20.0"/>
+                        <ColumnDefinition Width="20.0" />
+                        <ColumnDefinition Width="15.0" />
+                        <ColumnDefinition Width="20.0" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Text="{Binding FlaggedMinesCounter}" IsEnabled="False" TextAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Grid.Column="1" Content="/" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <TextBox Grid.Column="0" Text="{Binding FlaggedMinesCounter}" IsEnabled="False" TextAlignment="Center" VerticalContentAlignment="Center" />
+                    <Label Grid.Column="1" Content="/" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     <TextBox Grid.Column="2" Text="{Binding NumberOfMines}" TextAlignment="Center" VerticalContentAlignment="Center">
                         <TextBox.IsEnabled>
                             <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}">
-                                <Binding Path="IsNotRunning" Mode="OneWay"/>
-                                <Binding Path="SelectedGameMode"/>
+                                <Binding Path="IsNotRunning" Mode="OneWay" />
+                                <Binding Path="SelectedGameMode" />
                             </MultiBinding>
                         </TextBox.IsEnabled>
                     </TextBox>

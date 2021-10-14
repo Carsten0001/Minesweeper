@@ -8,15 +8,17 @@ namespace Minesweeper.ViewModels
     /// <summary>
     /// ViewModel of a Tile
     /// </summary>
-    public class TileViewModel: BindableBase
+    public class TileViewModel : BindableBase
     {
         #region Fields
-        private BitmapSource _tileStateImage;
-        private bool _hasBomb = false; 
 
-        #endregion
+        private BitmapSource _tileStateImage;
+        private bool _hasBomb = false;
+
+        #endregion Fields
 
         #region Properties
+
         /// <summary>
         /// The unique identifier of the tile
         /// </summary>
@@ -28,7 +30,7 @@ namespace Minesweeper.ViewModels
         public BitmapSource TileStateImage
         {
             get => _tileStateImage;
-            set => SetProperty(ref _tileStateImage, value);  
+            set => SetProperty(ref _tileStateImage, value);
         }
 
         /// <summary>
@@ -40,9 +42,10 @@ namespace Minesweeper.ViewModels
             set => SetProperty(ref _hasBomb, value);
         }
 
-        #endregion
+        #endregion Properties
 
         #region Constructor
+
         /// <summary>
         /// Gets the Initial Image for the Tiles
         /// </summary>
@@ -50,9 +53,11 @@ namespace Minesweeper.ViewModels
         {
             TileStateImage = MinesCore.Instance.BitmapSources[StateImages.None];
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Commanding
+
         private ICommand _toggleButtonStateCommand;
         private ICommand _markTile;
 
@@ -72,6 +77,7 @@ namespace Minesweeper.ViewModels
                 return _toggleButtonStateCommand;
             }
         }
+
         /// <summary>
         /// Calls <see cref="DoMarkTile"/> if a Tile is right clicked
         /// </summary>
@@ -79,7 +85,7 @@ namespace Minesweeper.ViewModels
         {
             get
             {
-                if(_markTile == null)
+                if (_markTile == null)
                 {
                     _markTile = new RelayCommand(
                         p => CanMarkTile,
@@ -88,10 +94,13 @@ namespace Minesweeper.ViewModels
                 return _markTile;
             }
         }
-        #endregion
+
+        #endregion Commanding
 
         #region Methods
+
         private bool CanToggleButtonState => true;
+
         private void DoToggleButtonState()
         {
             if (HasMine)
@@ -106,6 +115,7 @@ namespace Minesweeper.ViewModels
         }
 
         private bool CanMarkTile => true;
+
         private void DoMarkTile()
         {
             if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.None])
@@ -123,6 +133,7 @@ namespace Minesweeper.ViewModels
                 TileStateImage = MinesCore.Instance.BitmapSources[StateImages.None];
             }
         }
-        #endregion
+
+        #endregion Methods
     }
 }

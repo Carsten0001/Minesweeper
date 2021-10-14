@@ -1,19 +1,19 @@
 ﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModels="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.Tile"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="32" d:DesignWidth="32" HorizontalAlignment="Left" VerticalAlignment="Top">
     <UserControl.DataContext>
-        <ViewModels:TileViewModel/>
+        <ViewModels:TileViewModel />
     </UserControl.DataContext>
     <StackPanel>
         <Button Focusable="False" Command="{Binding ToggleButtonStateCommand}" Height="32" Width="32">
-            <Image Source="{Binding TileStateImage}" Stretch="UniformToFill"/>
+            <Image Source="{Binding TileStateImage}" Stretch="UniformToFill" />
             <Button.InputBindings>
-                <MouseBinding Gesture="RightClick" Command="{Binding MarkTile}"/>
+                <MouseBinding Gesture="RightClick" Command="{Binding MarkTile}" />
             </Button.InputBindings>
         </Button>
     </StackPanel>

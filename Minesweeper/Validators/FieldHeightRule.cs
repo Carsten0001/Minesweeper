@@ -47,7 +47,6 @@ namespace Minesweeper.Validators
             // Need to pull the value out of the BindingExpression.
             if (value is BindingExpression binding)
             {
-
                 // Get the bound object and name of the property
                 string resolvedPropertyName = binding.GetType().GetProperty("ResolvedSourcePropertyName", BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance).GetValue(binding, null).ToString();
                 object resolvedSource = binding.GetType().GetProperty("ResolvedSource", BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance).GetValue(binding, null);
