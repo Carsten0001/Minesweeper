@@ -9,9 +9,10 @@ namespace Minesweeper.ViewModels
     /// <summary>
     /// The ViewModel auf the MainGameView
     /// </summary>
-    class GameViewModel : BindableBase, IObserver<MineData>
+    internal class GameViewModel : BindableBase, IObserver<MineData>
     {
         #region Fields
+
         private double _mainViewMaxWidth = System.Windows.SystemParameters.MaximizedPrimaryScreenWidth;
         private double _mainViewMaxHeight = System.Windows.SystemParameters.MaximizedPrimaryScreenHeight;
         private int _sizeX;
@@ -25,9 +26,11 @@ namespace Minesweeper.ViewModels
         private GameMode _selectedGameMode = GameMode.Standard;
         private Difficulty _selectedDifficulty = Difficulty.Normal;
         private IDisposable _cancellation;
-        #endregion
+
+        #endregion Fields
 
         #region Properties
+
         public string StartButtonContent { get; set; } = "Start";
 
         public double MainViewMaxHeight
@@ -102,11 +105,12 @@ namespace Minesweeper.ViewModels
             set => SetProperty(ref _selectedDifficulty, value);
         }
 
-        
-        #endregion
+        #endregion Properties
 
         #region Commanding
+
         private ICommand _startGame;
+
         public ICommand StartGame
         {
             get
@@ -120,9 +124,11 @@ namespace Minesweeper.ViewModels
                 return _startGame;
             }
         }
-        #endregion
+
+        #endregion Commanding
 
         #region Methods
+
         public GameViewModel()
         {
             MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
@@ -130,7 +136,7 @@ namespace Minesweeper.ViewModels
         }
 
         /// <summary>
-        /// Starts the Game. Calls <see cref="StartGame()"/>. 
+        /// Starts the Game. Calls <see cref="StartGame()"/>.
         /// Calls <see cref="Subscribe(MinesCore)"/>
         /// Calls <see cref="FillTilesCollection"/>
         /// </summary>
@@ -146,7 +152,7 @@ namespace Minesweeper.ViewModels
             Subscribe(MinesCore.Instance);
             //FlaggedMinesCounter = NumberOfMines;
             FillTilesCollection();
-           
+
             IsNotRunning = false;
             _isPlaygroundUnlocked = true;
         }
@@ -176,8 +182,9 @@ namespace Minesweeper.ViewModels
                 }
             }
         }
+
         /// <summary>
-        /// Clears <see cref="Tiles"/>, sets <see cref="_isNotRunning"/> to true and 
+        /// Clears <see cref="Tiles"/>, sets <see cref="_isNotRunning"/> to true and
         /// unsubscribes from MineCore Observer list
         /// </summary>
         private void Reset()
@@ -231,6 +238,7 @@ namespace Minesweeper.ViewModels
         }
 
         private bool CanStartGame => SizeX > 0 && SizeX <= 28 && SizeY > 0 && SizeY <= 28;
-        #endregion
+
+        #endregion Methods
     }
 }

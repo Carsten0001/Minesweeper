@@ -21,6 +21,7 @@ namespace Minesweeper.Model
     public sealed class MinesCore : IObservable<MineData>
     {
         #region Fields
+
         private static List<IObserver<MineData>> _observers;
         private static MineData _mineData;
         private static readonly Lazy<MinesCore> _lazy = new Lazy<MinesCore>(() => new MinesCore());
@@ -28,14 +29,17 @@ namespace Minesweeper.Model
         private int _sizeY;
         private ObservableCollection<Tile> _tiles;
         private int _flaggedMinesCounter;
-        #endregion
 
-        #region Properties 
+        #endregion Fields
+
+        #region Properties
+
         /// <summary>
         /// Indicates if the game is over
         /// Default is true
         /// </summary>
         public bool GameOver { get; set; } = true;
+
         /// <summary>
         /// Number of Mines
         /// </summary>
@@ -61,9 +65,11 @@ namespace Minesweeper.Model
         /// A Collection of all the Images which can be displayed on a Tile
         /// </summary>
         public Dictionary<StateImages, BitmapSource> BitmapSources { get; private set; }
-        #endregion
+
+        #endregion Properties
 
         #region Constructors
+
         /// <summary>
         /// Returns the Instance of the MinesCore Singleton by lazy loading
         /// </summary>
@@ -92,11 +98,13 @@ namespace Minesweeper.Model
                 BitmapSources.Add(image.Key, (Imaging.CreateBitmapSourceFromHBitmap(image.Value.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(image.Value.Width, image.Value.Height))));
             }
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Methods
+
         /// <summary>
-        /// Starts the Game an initializes the List of Observers. 
+        /// Starts the Game an initializes the List of Observers.
         /// Calculates the size depended on GameMode and Difficulty.
         /// Calls <see cref="UpdateObservers()"/>
         /// </summary>
@@ -131,9 +139,11 @@ namespace Minesweeper.Model
                     case Difficulty.Easy:
                         NumberOfMines = 10;
                         break;
+
                     case Difficulty.Normal:
                         NumberOfMines = 40;
                         break;
+
                     case Difficulty.Hard:
                         NumberOfMines = 99;
                         break;
@@ -147,6 +157,7 @@ namespace Minesweeper.Model
             }
             UpdateObservers();
         }
+
         /// <summary>
         /// Informs the MineCore that the User has revealed a mine.
         /// </summary>
@@ -165,6 +176,7 @@ namespace Minesweeper.Model
                 case MessageBoxResult.No:; break;
             }
         }
+
         /// <summary>
         /// Subscribs to Observer list
         /// </summary>
@@ -191,6 +203,7 @@ namespace Minesweeper.Model
                 observer.OnNext(_mineData);
             }
         }
+
         /// <summary>
         /// Calls <see cref="OpenField(int)"/> and checks if the player has won by calling <see cref="CheckIfWon"/>
         /// </summary>
@@ -622,7 +635,6 @@ namespace Minesweeper.Model
                     default:; break;
                 }
             }
-
         }
 
         private StateImages GetStateImage(int number)
@@ -639,11 +651,10 @@ namespace Minesweeper.Model
                 case 7: return StateImages.Seven;
                 case 8: return StateImages.Eight;
                 default: return StateImages.None;
-
             }
         }
 
-        #endregion
+        #endregion Methods
     }
 
     /// <summary>
@@ -655,10 +666,12 @@ namespace Minesweeper.Model
         /// 8 X 8; 10 Mines
         /// </summary>
         Easy,
+
         /// <summary>
         /// 16 X 16; 40 Mines
         /// </summary>
         Normal,
+
         /// <summary>
         /// 16 X 30; 99 Mines
         /// </summary>
@@ -674,6 +687,7 @@ namespace Minesweeper.Model
         /// Game will be built dependend on diffiulty choosen.
         /// </summary>
         Standard,
+
         /// <summary>
         /// Size and Number of Mines can be customized. Difficulty has no effect.
         /// </summary>
@@ -689,54 +703,67 @@ namespace Minesweeper.Model
         /// The Tile is revealed and has no Mine
         /// </summary>
         None,
+
         /// <summary>
         /// Initial State of Mine
         /// </summary>
         Null,
+
         /// <summary>
         /// The Tile is revealed and has one Mine
         /// </summary>
         One,
+
         /// <summary>
         /// The Tile is revealed and has two Mines
         /// </summary>
         Two,
+
         /// <summary>
         /// The Tile is revealed and has three Mines
         /// </summary>
         Three,
+
         /// <summary>
         /// The Tile is revealed and has four Mines
         /// </summary>
         Four,
+
         /// <summary>
         /// The Tile is revealed and has five Mines
         /// </summary>
         Five,
+
         /// <summary>
         /// The Tile is revealed and has six Mines
         /// </summary>
         Six,
+
         /// <summary>
         /// The Tile is revealed and has seven Mines
         /// </summary>
         Seven,
+
         /// <summary>
         /// The Tile is revealed and has eight Mines
         /// </summary>
         Eight,
+
         /// <summary>
         /// Tile right clicked once
         /// </summary>
         Flag,
+
         /// <summary>
         /// Tile right clicked twice
         /// </summary>
         Questionmark,
+
         /// <summary>
         /// The player has lost the game and Mine has been reveled automatically
         /// </summary>
         Mine,
+
         /// <summary>
         /// The player has clicked a Tile which has bomb
         /// </summary>
