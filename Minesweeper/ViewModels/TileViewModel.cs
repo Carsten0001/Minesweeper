@@ -12,8 +12,8 @@ namespace Minesweeper.ViewModels
     {
         #region Fields
 
-        private BitmapSource _tileStateImage;
-        private bool _hasBomb = false;
+        private byte[]_tileStateImage;
+        private bool _hasBomb;
 
         #endregion Fields
 
@@ -27,7 +27,7 @@ namespace Minesweeper.ViewModels
         /// <summary>
         /// The image displayed on the tile
         /// </summary>
-        public BitmapSource TileStateImage
+        public byte[] TileStateImage
         {
             get => _tileStateImage;
             set => SetProperty(ref _tileStateImage, value);
@@ -51,7 +51,7 @@ namespace Minesweeper.ViewModels
         /// </summary>
         public TileViewModel()
         {
-            TileStateImage = MinesCore.Instance.BitmapSources[StateImages.None];
+            TileStateImage = MinesCore.Instance.Images[StateImages.None];
         }
 
         #endregion Constructor
@@ -99,13 +99,13 @@ namespace Minesweeper.ViewModels
 
         #region Methods
 
-        private bool CanToggleButtonState => true;
+        private static bool CanToggleButtonState => true;
 
         private void DoToggleButtonState()
         {
             if (HasMine)
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Explosion];
+                TileStateImage = MinesCore.Instance.Images[StateImages.Explosion];
                 MinesCore.Instance.GameLost();
             }
             else
@@ -114,23 +114,23 @@ namespace Minesweeper.ViewModels
             }
         }
 
-        private bool CanMarkTile => true;
+        private static bool CanMarkTile => true;
 
         private void DoMarkTile()
         {
-            if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.None])
+            if (TileStateImage == MinesCore.Instance.Images[StateImages.None])
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Flag];
+                TileStateImage = MinesCore.Instance.Images[StateImages.Flag];
                 MinesCore.Instance.FlaggedMinesCounter++;
             }
-            else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Flag])
+            else if (TileStateImage == MinesCore.Instance.Images[StateImages.Flag])
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Questionmark];
+                TileStateImage = MinesCore.Instance.Images[StateImages.Questionmark];
                 MinesCore.Instance.FlaggedMinesCounter--;
             }
-            else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Questionmark])
+            else if (TileStateImage == MinesCore.Instance.Images[StateImages.Questionmark])
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.None];
+                TileStateImage = MinesCore.Instance.Images[StateImages.None];
             }
         }
 

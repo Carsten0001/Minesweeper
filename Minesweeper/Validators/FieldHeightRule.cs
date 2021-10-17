@@ -41,7 +41,7 @@ namespace Minesweeper.Validators
             }
         }
 
-        private object GetBoundValue(object value)
+        private static object GetBoundValue(object value)
         {
             // ValidationStep was UpdatedValue or CommittedValue (Validate after setting)
             // Need to pull the value out of the BindingExpression.
