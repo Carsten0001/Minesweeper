@@ -99,7 +99,7 @@ namespace Minesweeper.ViewModels
 
         #region Methods
 
-        private static bool CanToggleButtonState => true;
+        private static bool CanToggleButtonState => !MinesCore.Instance.GameOver;
 
         private void DoToggleButtonState()
         {
@@ -107,6 +107,7 @@ namespace Minesweeper.ViewModels
             {
                 TileStateImage = MinesCore.Instance.Images[StateImages.Explosion];
                 MinesCore.Instance.GameLost();
+                
             }
             else
             {
