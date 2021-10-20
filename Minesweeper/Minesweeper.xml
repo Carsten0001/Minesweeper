@@ -341,6 +341,21 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Minesweeper.Properties.Resources.Custom">
+            <summary>
+              Looks up a localized string similar to Custom.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Difficulty">
+            <summary>
+              Looks up a localized string similar to Difficulty.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Easy">
+            <summary>
+              Looks up a localized string similar to Easy.
+            </summary>
+        </member>
         <member name="P:Minesweeper.Properties.Resources.Eight">
             <summary>
               Looks up a localized resource of type System.Byte[].
@@ -366,6 +381,16 @@
               Looks up a localized resource of type System.Byte[].
             </summary>
         </member>
+        <member name="P:Minesweeper.Properties.Resources.Game_Mode">
+            <summary>
+              Looks up a localized string similar to Game Mode.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Hard">
+            <summary>
+              Looks up a localized string similar to Hard.
+            </summary>
+        </member>
         <member name="P:Minesweeper.Properties.Resources.Mine">
             <summary>
               Looks up a localized resource of type System.Byte[].
@@ -376,9 +401,29 @@
               Looks up a localized resource of type System.Byte[].
             </summary>
         </member>
+        <member name="P:Minesweeper.Properties.Resources.Normal">
+            <summary>
+              Looks up a localized string similar to Normal.
+            </summary>
+        </member>
         <member name="P:Minesweeper.Properties.Resources.Null">
             <summary>
               Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Number_Of_Columns">
+            <summary>
+              Looks up a localized string similar to Number of Columns.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Number_Of_Mines">
+            <summary>
+              Looks up a localized string similar to Number of Mines.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Number_Of_Rows">
+            <summary>
+              Looks up a localized string similar to Number of Rows.
             </summary>
         </member>
         <member name="P:Minesweeper.Properties.Resources.One">
@@ -399,6 +444,16 @@
         <member name="P:Minesweeper.Properties.Resources.Six">
             <summary>
               Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Standard">
+            <summary>
+              Looks up a localized string similar to Standard.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Start_Button">
+            <summary>
+              Looks up a localized string similar to Start.
             </summary>
         </member>
         <member name="P:Minesweeper.Properties.Resources.Three">

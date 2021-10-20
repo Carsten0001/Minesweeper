@@ -7,6 +7,7 @@
         xmlns:GameModeAlias="clr-namespace:Minesweeper.Model"
         xmlns:ViewModel="clr-namespace:Minesweeper.ViewModels" x:Class="Minesweeper.GameWindow"
         xmlns:Converter="clr-namespace:Minesweeper.Converters"
+        xmlns:Resources="clr-namespace:Minesweeper.Properties"
         xmlns:c="clr-namespace:Minesweeper.Validators"
         mc:Ignorable="d"
         Title="Minesweeper" SizeToContent="WidthAndHeight" SnapsToDevicePixels="True" MaxHeight="{Binding MainViewMaxHeight}" MaxWidth="{Binding MainViewMaxWidth}">
@@ -57,7 +58,7 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
         <StackPanel>
-            <Button Content="{Binding StartButtonContent}" Visibility="{Binding IsNotRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding StartGame}" />
+            <Button Content="{x:Static Resources:Resources.Start_Button}" Visibility="{Binding IsNotRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding StartGame}" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -70,9 +71,9 @@
                     <ColumnDefinition Width=".4*" />
                     <ColumnDefinition Width=".6*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Game Mode" />
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static Resources:Resources.Game_Mode}" />
                 <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Source={StaticResource GameModeEnum}}" SelectedItem="{Binding SelectedGameMode}" IsEnabled="{Binding IsNotRunning, Mode=OneWay}" />
-                <Label Grid.Row="1" Grid.Column="0" Content="Difficulty" />
+                <Label Grid.Row="1" Grid.Column="0" Content="{x:Static Resources:Resources.Difficulty}" />
                 <ComboBox Name="DifficultyComboBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DifficultyEnum}}" SelectedItem="{Binding SelectedDifficulty}" IsTextSearchCaseSensitive="True">
                     <ComboBox.IsEnabled>
                         <MultiBinding Converter="{StaticResource gameModeToBooleanConverter}" ConverterParameter="Difficulty">
@@ -81,7 +82,7 @@
                         </MultiBinding>
                     </ComboBox.IsEnabled>
                 </ComboBox>
-                <Label Grid.Row="2" Grid.Column="0" Content="Number of Rows" />
+                <Label Grid.Row="2" Grid.Column="0" Content="{x:Static Resources:Resources.Number_Of_Rows}" />
                 <TextBox Grid.Row="2" Grid.Column="1" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}" VerticalContentAlignment="Center">
                     <TextBox.Text>
                         <Binding Path="SizeY" Mode="TwoWay">
@@ -97,7 +98,7 @@
                         </MultiBinding>
                     </TextBox.IsEnabled>
                 </TextBox>
-                <Label Grid.Row="3" Grid.Column="0" Content="Number of Columns" />
+                <Label Grid.Row="3" Grid.Column="0" Content="{x:Static Resources:Resources.Number_Of_Columns}" />
                 <TextBox Grid.Row="3" Grid.Column="1" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}" VerticalContentAlignment="Center">
                     <TextBox.Text>
                         <Binding Path="SizeX" Mode="TwoWay">
@@ -113,7 +114,7 @@
                         </MultiBinding>
                     </TextBox.IsEnabled>
                 </TextBox>
-                <Label Grid.Row="4" Grid.Column="0" Content="Number of Mines" />
+                <Label Grid.Row="4" Grid.Column="0" Content="{x:Static Resources:Resources.Number_Of_Mines}" />
                 <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20.0" />

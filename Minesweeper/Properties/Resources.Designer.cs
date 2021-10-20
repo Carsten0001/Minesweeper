@@ -22,7 +22,7 @@ namespace Minesweeper.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Minesweeper.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Minesweeper.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Minesweeper.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,36 @@ namespace Minesweeper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        public static string Custom {
+            get {
+                return ResourceManager.GetString("Custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difficulty.
+        /// </summary>
+        public static string Difficulty {
+            get {
+                return ResourceManager.GetString("Difficulty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Easy.
+        /// </summary>
+        public static string Easy {
+            get {
+                return ResourceManager.GetString("Easy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Eight {
+        public static byte[] Eight {
             get {
                 object obj = ResourceManager.GetObject("Eight", resourceCulture);
                 return ((byte[])(obj));
@@ -73,7 +100,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Explosion {
+        public static byte[] Explosion {
             get {
                 object obj = ResourceManager.GetObject("Explosion", resourceCulture);
                 return ((byte[])(obj));
@@ -83,7 +110,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Five {
+        public static byte[] Five {
             get {
                 object obj = ResourceManager.GetObject("Five", resourceCulture);
                 return ((byte[])(obj));
@@ -93,7 +120,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Flag {
+        public static byte[] Flag {
             get {
                 object obj = ResourceManager.GetObject("Flag", resourceCulture);
                 return ((byte[])(obj));
@@ -103,7 +130,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Four {
+        public static byte[] Four {
             get {
                 object obj = ResourceManager.GetObject("Four", resourceCulture);
                 return ((byte[])(obj));
@@ -111,9 +138,27 @@ namespace Minesweeper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Mode.
+        /// </summary>
+        public static string Game_Mode {
+            get {
+                return ResourceManager.GetString("Game_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hard.
+        /// </summary>
+        public static string Hard {
+            get {
+                return ResourceManager.GetString("Hard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Mine {
+        public static byte[] Mine {
             get {
                 object obj = ResourceManager.GetObject("Mine", resourceCulture);
                 return ((byte[])(obj));
@@ -123,7 +168,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] None {
+        public static byte[] None {
             get {
                 object obj = ResourceManager.GetObject("None", resourceCulture);
                 return ((byte[])(obj));
@@ -131,9 +176,18 @@ namespace Minesweeper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string Normal {
+            get {
+                return ResourceManager.GetString("Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Null {
+        public static byte[] Null {
             get {
                 object obj = ResourceManager.GetObject("Null", resourceCulture);
                 return ((byte[])(obj));
@@ -141,9 +195,36 @@ namespace Minesweeper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Columns.
+        /// </summary>
+        public static string Number_Of_Columns {
+            get {
+                return ResourceManager.GetString("Number_Of_Columns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Mines.
+        /// </summary>
+        public static string Number_Of_Mines {
+            get {
+                return ResourceManager.GetString("Number_Of_Mines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Rows.
+        /// </summary>
+        public static string Number_Of_Rows {
+            get {
+                return ResourceManager.GetString("Number_Of_Rows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] One {
+        public static byte[] One {
             get {
                 object obj = ResourceManager.GetObject("One", resourceCulture);
                 return ((byte[])(obj));
@@ -153,7 +234,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Questionmark {
+        public static byte[] Questionmark {
             get {
                 object obj = ResourceManager.GetObject("Questionmark", resourceCulture);
                 return ((byte[])(obj));
@@ -163,7 +244,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Seven {
+        public static byte[] Seven {
             get {
                 object obj = ResourceManager.GetObject("Seven", resourceCulture);
                 return ((byte[])(obj));
@@ -173,7 +254,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Six {
+        public static byte[] Six {
             get {
                 object obj = ResourceManager.GetObject("Six", resourceCulture);
                 return ((byte[])(obj));
@@ -181,9 +262,27 @@ namespace Minesweeper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Standard.
+        /// </summary>
+        public static string Standard {
+            get {
+                return ResourceManager.GetString("Standard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Start_Button {
+            get {
+                return ResourceManager.GetString("Start_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Three {
+        public static byte[] Three {
             get {
                 object obj = ResourceManager.GetObject("Three", resourceCulture);
                 return ((byte[])(obj));
@@ -193,7 +292,7 @@ namespace Minesweeper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] Two {
+        public static byte[] Two {
             get {
                 object obj = ResourceManager.GetObject("Two", resourceCulture);
                 return ((byte[])(obj));

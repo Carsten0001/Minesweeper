@@ -160,4 +160,37 @@
   <data name="Two" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\two.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Start_Button" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Game_Mode" xml:space="preserve">
+    <value>Game Mode</value>
+  </data>
+  <data name="Difficulty" xml:space="preserve">
+    <value>Difficulty</value>
+  </data>
+  <data name="Number_Of_Rows" xml:space="preserve">
+    <value>Number of Rows</value>
+  </data>
+  <data name="Number_Of_Columns" xml:space="preserve">
+    <value>Number of Columns</value>
+  </data>
+  <data name="Number_Of_Mines" xml:space="preserve">
+    <value>Number of Mines</value>
+  </data>
+  <data name="Standard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Easy" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="Hard" xml:space="preserve">
+    <value>Hard</value>
+  </data>
 </root>
