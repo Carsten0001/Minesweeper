@@ -1,4 +1,5 @@
 ﻿using Minesweeper.Commands;
+using Minesweeper.Enums;
 using Minesweeper.Model;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;

@@ -1,4 +1,5 @@
 ﻿using Minesweeper.Commands;
+using Minesweeper.Enums;
 using Minesweeper.Model;
 using System;
 using System.Collections.ObjectModel;
