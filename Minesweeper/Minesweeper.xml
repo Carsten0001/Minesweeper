@@ -22,9 +22,34 @@
             Application Entry Point.
             </summary>
         </member>
+        <member name="T:Minesweeper.Converters.EnumToStringConverter">
+            <summary>
+            Converts Enum values to localized strings and back.
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Converters.EnumToStringConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Converts enum value to localized string.
+            </summary>
+            <param name="value">The enum value</param>
+            <param name="targetType">String</param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns>Localized string of enum value</returns>
+        </member>
+        <member name="M:Minesweeper.Converters.EnumToStringConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="value">String</param>
+            <param name="targetType">Enum type</param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns>Enum value</returns>
+        </member>
         <member name="T:Minesweeper.Converters.GameModeToBooleanConverter">
             <summary>
-            A Converter for a bool and a <see cref="T:Minesweeper.Model.GameMode"/>
+            A Converter for a bool and a <see cref="T:Minesweeper.Enums.GameMode"/>
             </summary>
         </member>
         <member name="M:Minesweeper.Converters.GameModeToBooleanConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
@@ -46,6 +71,139 @@
             <param name="parameter"></param>
             <param name="culture"></param>
             <returns>null</returns>
+        </member>
+        <member name="T:Minesweeper.Enums.Difficulty">
+            <summary>
+            Difficulties which can be choosen from
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.Difficulty.Easy">
+            <summary>
+            8 X 8; 10 Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.Difficulty.Normal">
+            <summary>
+            16 X 16; 40 Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.Difficulty.Hard">
+            <summary>
+            16 X 30; 99 Mines
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Enums.GameMode">
+            <summary>
+            The two GameModes
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.GameMode.Standard">
+            <summary>
+            Game will be built dependend on diffiulty choosen.
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.GameMode.Custom">
+            <summary>
+            Size and Number of Mines can be customized. Difficulty has no effect.
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Enums.StateImages">
+            <summary>
+            The Names of the Images which could be displayed on the Tiles
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.None">
+            <summary>
+            The Tile is revealed and has no Mine
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Null">
+            <summary>
+            Initial State of Mine
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.One">
+            <summary>
+            The Tile is revealed and has one Mine
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Two">
+            <summary>
+            The Tile is revealed and has two Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Three">
+            <summary>
+            The Tile is revealed and has three Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Four">
+            <summary>
+            The Tile is revealed and has four Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Five">
+            <summary>
+            The Tile is revealed and has five Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Six">
+            <summary>
+            The Tile is revealed and has six Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Seven">
+            <summary>
+            The Tile is revealed and has seven Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Eight">
+            <summary>
+            The Tile is revealed and has eight Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Flag">
+            <summary>
+            Tile right clicked once
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Questionmark">
+            <summary>
+            Tile right clicked twice
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Mine">
+            <summary>
+            The player has lost the game and Mine has been reveled automatically
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Explosion">
+            <summary>
+            The player has clicked a Tile which has bomb
+            </summary>
+        </member>
+        <member name="T:Minesweeper.MarkupExtensions.EnumerateExtension">
+            <summary>
+            MarkupExtension to Bind an enum
+            </summary>
+        </member>
+        <member name="P:Minesweeper.MarkupExtensions.EnumerateExtension.Type">
+            <summary>
+            Type of enum
+            </summary>
+        </member>
+        <member name="M:Minesweeper.MarkupExtensions.EnumerateExtension.#ctor(System.Type)">
+            <summary>
+            ctor
+            </summary>
+            <param name="type">Enum Type</param>
+        </member>
+        <member name="M:Minesweeper.MarkupExtensions.EnumerateExtension.ProvideValue(System.IServiceProvider)">
+            <summary>
+            Provides value to control.
+            </summary>
+            <param name="serviceProvider"></param>
+            <returns></returns>
         </member>
         <member name="T:Minesweeper.Model.MineData">
             <summary>
@@ -110,7 +268,7 @@
             Returns the Instance of the MinesCore Singleton by lazy loading
             </summary>
         </member>
-        <member name="M:Minesweeper.Model.MinesCore.StartGame(Minesweeper.Model.GameMode,Minesweeper.Model.Difficulty,System.Int32,System.Int32,System.Nullable{System.Int32},System.Collections.ObjectModel.ObservableCollection{Minesweeper.Tile}@)">
+        <member name="M:Minesweeper.Model.MinesCore.StartGame(Minesweeper.Enums.GameMode,Minesweeper.Enums.Difficulty,System.Int32,System.Int32,System.Nullable{System.Int32},System.Collections.ObjectModel.ObservableCollection{Minesweeper.Tile}@)">
             <summary>
             Starts the Game an initializes the List of Observers.
             Calculates the size depended on GameMode and Difficulty.
@@ -214,116 +372,6 @@
             </summary>
             <param name="id">Id of the Tile</param>
             <returns>Number of Mines around</returns>
-        </member>
-        <member name="T:Minesweeper.Model.Difficulty">
-            <summary>
-            Difficulties which can be choosen from
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.Difficulty.Easy">
-            <summary>
-            8 X 8; 10 Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.Difficulty.Normal">
-            <summary>
-            16 X 16; 40 Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.Difficulty.Hard">
-            <summary>
-            16 X 30; 99 Mines
-            </summary>
-        </member>
-        <member name="T:Minesweeper.Model.GameMode">
-            <summary>
-            The two GameModes
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.GameMode.Standard">
-            <summary>
-            Game will be built dependend on diffiulty choosen.
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.GameMode.Custom">
-            <summary>
-            Size and Number of Mines can be customized. Difficulty has no effect.
-            </summary>
-        </member>
-        <member name="T:Minesweeper.Model.StateImages">
-            <summary>
-            The Names of the Images which could be displayed on the Tiles
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.None">
-            <summary>
-            The Tile is revealed and has no Mine
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Null">
-            <summary>
-            Initial State of Mine
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.One">
-            <summary>
-            The Tile is revealed and has one Mine
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Two">
-            <summary>
-            The Tile is revealed and has two Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Three">
-            <summary>
-            The Tile is revealed and has three Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Four">
-            <summary>
-            The Tile is revealed and has four Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Five">
-            <summary>
-            The Tile is revealed and has five Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Six">
-            <summary>
-            The Tile is revealed and has six Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Seven">
-            <summary>
-            The Tile is revealed and has seven Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Eight">
-            <summary>
-            The Tile is revealed and has eight Mines
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Flag">
-            <summary>
-            Tile right clicked once
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Questionmark">
-            <summary>
-            Tile right clicked twice
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Mine">
-            <summary>
-            The player has lost the game and Mine has been reveled automatically
-            </summary>
-        </member>
-        <member name="F:Minesweeper.Model.StateImages.Explosion">
-            <summary>
-            The player has clicked a Tile which has bomb
-            </summary>
         </member>
         <member name="T:Minesweeper.Properties.Resources">
             <summary>
@@ -632,6 +680,36 @@
         <member name="M:Minesweeper.Tile.InitializeComponent">
             <summary>
             InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>
