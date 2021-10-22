@@ -1,0 +1,736 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Minesweeper</name>
+    </assembly>
+    <members>
+        <member name="T:Minesweeper.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:Minesweeper.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Minesweeper.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Converters.EnumToStringConverter">
+            <summary>
+            Converts Enum values to localized strings and back.
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Converters.EnumToStringConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Converts enum value to localized string.
+            </summary>
+            <param name="value">The enum value</param>
+            <param name="targetType">String</param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns>Localized string of enum value</returns>
+        </member>
+        <member name="M:Minesweeper.Converters.EnumToStringConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="value">String</param>
+            <param name="targetType">Enum type</param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns>Enum value</returns>
+        </member>
+        <member name="T:Minesweeper.Converters.GameModeToBooleanConverter">
+            <summary>
+            A Converter for a bool and a <see cref="T:Minesweeper.Enums.GameMode"/>
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Converters.GameModeToBooleanConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Converts bool and GameMode to one bool output.
+            </summary>
+            <param name="values">Array of two input values. First index must be a bool the second a GameMode</param>
+            <param name="targetType">not used</param>
+            <param name="parameter">the string "Difficulty" or null</param>
+            <param name="culture">not used</param>
+            <returns></returns>
+        </member>
+        <member name="M:Minesweeper.Converters.GameModeToBooleanConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Returns always null
+            </summary>
+            <param name="value"></param>
+            <param name="targetTypes"></param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns>null</returns>
+        </member>
+        <member name="T:Minesweeper.Enums.Difficulty">
+            <summary>
+            Difficulties which can be choosen from
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.Difficulty.Easy">
+            <summary>
+            8 X 8; 10 Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.Difficulty.Normal">
+            <summary>
+            16 X 16; 40 Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.Difficulty.Hard">
+            <summary>
+            16 X 30; 99 Mines
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Enums.GameMode">
+            <summary>
+            The two GameModes
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.GameMode.Standard">
+            <summary>
+            Game will be built dependend on diffiulty choosen.
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.GameMode.Custom">
+            <summary>
+            Size and Number of Mines can be customized. Difficulty has no effect.
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Enums.StateImages">
+            <summary>
+            The Names of the Images which could be displayed on the Tiles
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.None">
+            <summary>
+            The Tile is revealed and has no Mine
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Null">
+            <summary>
+            Initial State of Mine
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.One">
+            <summary>
+            The Tile is revealed and has one Mine
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Two">
+            <summary>
+            The Tile is revealed and has two Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Three">
+            <summary>
+            The Tile is revealed and has three Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Four">
+            <summary>
+            The Tile is revealed and has four Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Five">
+            <summary>
+            The Tile is revealed and has five Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Six">
+            <summary>
+            The Tile is revealed and has six Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Seven">
+            <summary>
+            The Tile is revealed and has seven Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Eight">
+            <summary>
+            The Tile is revealed and has eight Mines
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Flag">
+            <summary>
+            Tile right clicked once
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Questionmark">
+            <summary>
+            Tile right clicked twice
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Mine">
+            <summary>
+            The player has lost the game and Mine has been reveled automatically
+            </summary>
+        </member>
+        <member name="F:Minesweeper.Enums.StateImages.Explosion">
+            <summary>
+            The player has clicked a Tile which has bomb
+            </summary>
+        </member>
+        <member name="T:Minesweeper.MarkupExtensions.EnumerateExtension">
+            <summary>
+            MarkupExtension to Bind an enum
+            </summary>
+        </member>
+        <member name="P:Minesweeper.MarkupExtensions.EnumerateExtension.Type">
+            <summary>
+            Type of enum
+            </summary>
+        </member>
+        <member name="M:Minesweeper.MarkupExtensions.EnumerateExtension.#ctor(System.Type)">
+            <summary>
+            ctor
+            </summary>
+            <param name="type">Enum Type</param>
+        </member>
+        <member name="M:Minesweeper.MarkupExtensions.EnumerateExtension.ProvideValue(System.IServiceProvider)">
+            <summary>
+            Provides value to control.
+            </summary>
+            <param name="serviceProvider"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Minesweeper.Model.MineData">
+            <summary>
+            Model for Observable
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MineData.NumberOfMines">
+            <summary>
+            Number of Mines
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MineData.RemainingMines">
+            <summary>
+            The Mines which are not flagged
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MineData.SizeX">
+            <summary>
+            Width of the GameBoard
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MineData.SizeY">
+            <summary>
+            Height of the GameBoard
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MineData.GameOver">
+            <summary>
+            Indicates if the game is over
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Model.MinesCore">
+            <summary>
+            The Heart of the Game
+            Mediator for the ViewModels
+            Holds all the values, which are nessecary for the game
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MinesCore.GameOver">
+            <summary>
+            Indicates if the game is over
+            Default is true
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MinesCore.NumberOfMines">
+            <summary>
+            Number of Mines
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MinesCore.FlaggedMinesCounter">
+            <summary>
+            Countes the Mines beeing flagged
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MinesCore.Images">
+            <summary>
+            A Collection of all the Images which can be displayed on a Tile
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Model.MinesCore.Instance">
+            <summary>
+            Returns the Instance of the MinesCore Singleton by lazy loading
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.StartGame(Minesweeper.Enums.GameMode,Minesweeper.Enums.Difficulty,System.Int32,System.Int32,System.Nullable{System.Int32},System.Collections.ObjectModel.ObservableCollection{Minesweeper.Tile}@)">
+            <summary>
+            Starts the Game an initializes the List of Observers.
+            Calculates the size depended on GameMode and Difficulty.
+            Calls <see cref="M:Minesweeper.Model.MinesCore.UpdateObservers"/>
+            </summary>
+            <param name="gameMode"></param>
+            <param name="difficulty"></param>
+            <param name="sizeX"></param>
+            <param name="sizeY"></param>
+            <param name="numberOfMines"></param>
+            <param name="tiles"></param>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.GameLost">
+            <summary>
+            Informs the MineCore that the User has revealed a mine.
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.Subscribe(System.IObserver{Minesweeper.Model.MineData})">
+            <summary>
+            Subscribs to Observer list
+            </summary>
+            <param name="observer">A Observer which wants to get informed</param>
+            <returns><see cref="T:Minesweeper.Model.Unsubscriber`1"/></returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.UpdateObservers">
+            <summary>
+            Updates all the Observers
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.RevealFieldAndCheckForWin(System.Int32)">
+            <summary>
+            Calls <see cref="M:Minesweeper.Model.MinesCore.OpenField(System.Int32)"/> and checks if the player has won by calling <see cref="M:Minesweeper.Model.MinesCore.CheckIfWon"/>
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.OpenField(System.Int32)">
+            <summary>
+            Changes the Button Image of the button specified by id
+            </summary>
+            <param name="id">id of the button that should be revealed</param>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckUpperLeftCorner(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Left Corner of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckUpperMid(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Upper Middle Tiles of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckUpperRightCorner(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Upper Right Corner of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckLeftMid(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Left Mid of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckRightMid(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Left Mid of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckBottomLeftCorner(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Left Bottom Corner of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckBottomMid(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Bottom Mid Tiles of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckBottomRightCorner(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Bottom Right Corner of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="M:Minesweeper.Model.MinesCore.CheckCenter(System.Int32)">
+            <summary>
+            Returns Number of Mines surrounding Center Tiles of Grid
+            </summary>
+            <param name="id">Id of the Tile</param>
+            <returns>Number of Mines around</returns>
+        </member>
+        <member name="T:Minesweeper.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Custom">
+            <summary>
+              Looks up a localized string similar to Custom.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Difficulty">
+            <summary>
+              Looks up a localized string similar to Difficulty.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Easy">
+            <summary>
+              Looks up a localized string similar to Easy.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Eight">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Explosion">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Fail_Dialog_Text">
+            <summary>
+              Looks up a localized string similar to You LOOSE!!! Wanna Restart?.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Fail_Dialog_Title">
+            <summary>
+              Looks up a localized string similar to Fatal Fail!.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Five">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Flag">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Four">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Game_Mode">
+            <summary>
+              Looks up a localized string similar to Game Mode.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Hard">
+            <summary>
+              Looks up a localized string similar to Hard.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Mine">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.None">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Normal">
+            <summary>
+              Looks up a localized string similar to Normal.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Null">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Number_Of_Columns">
+            <summary>
+              Looks up a localized string similar to Number of Columns.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Number_Of_Mines">
+            <summary>
+              Looks up a localized string similar to Number of Mines.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Number_Of_Rows">
+            <summary>
+              Looks up a localized string similar to Number of Rows.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.One">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Questionmark">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Seven">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Six">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Standard">
+            <summary>
+              Looks up a localized string similar to Standard.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Start_Button">
+            <summary>
+              Looks up a localized string similar to Start.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Three">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Two">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Win_Dialog_Text">
+            <summary>
+              Looks up a localized string similar to You Win!!! Wanna Restart?.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Win_Dialog_Title">
+            <summary>
+              Looks up a localized string similar to Awesome Job.
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Validators.FieldHeightWidthRule">
+            <summary>
+            Checks the Height Property of Game Field
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Validators.FieldHeightWidthRule.Min">
+            <summary>
+            Min Bounds
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Validators.FieldHeightWidthRule.Max">
+            <summary>
+            MaxBounds
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Validators.FieldHeightWidthRule.Validate(System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Checks if values is valid.
+            </summary>
+            <param name="value">The value that should be validated</param>
+            <param name="cultureInfo">Not used</param>
+            <returns>ValidationResult</returns>
+        </member>
+        <member name="T:Minesweeper.ViewModels.BindableBase">
+            <summary>
+                Implementation of <see cref="T:System.ComponentModel.INotifyPropertyChanged" /> to simplify models.
+            </summary>
+        </member>
+        <member name="E:Minesweeper.ViewModels.BindableBase.PropertyChanged">
+            <summary>
+                Multicast event for property change notifications.
+            </summary>
+        </member>
+        <member name="M:Minesweeper.ViewModels.BindableBase.SetProperty``1(``0@,``0,System.String)">
+            <summary>
+                Checks if a property already matches a desired value.  Sets the property and
+                notifies listeners only when necessary.
+            </summary>
+            <typeparam name="T">Type of the property.</typeparam>
+            <param name="storage">Reference to a property with both getter and setter.</param>
+            <param name="value">Desired value for the property.</param>
+            <param name="propertyName">
+                Name of the property used to notify listeners.  This
+                value is optional and can be provided automatically when invoked from compilers that
+                support CallerMemberName.
+            </param>
+            <returns>
+                True if the value was changed, false if the existing value matched the
+                desired value.
+            </returns>
+        </member>
+        <member name="M:Minesweeper.ViewModels.BindableBase.OnPropertyChanged(System.String)">
+            <summary>
+                Notifies listeners that a property value has changed.
+            </summary>
+            <param name="propertyName">
+                Name of the property used to notify listeners.  This
+                value is optional and can be provided automatically when invoked from compilers
+                that support <see cref="T:System.Runtime.CompilerServices.CallerMemberNameAttribute" />.
+            </param>
+        </member>
+        <member name="T:Minesweeper.ViewModels.GameViewModel">
+            <summary>
+            The ViewModel auf the MainGameView
+            </summary>
+        </member>
+        <member name="M:Minesweeper.ViewModels.GameViewModel.DoStartGame">
+            <summary>
+            Starts the Game. Calls <see cref="P:Minesweeper.ViewModels.GameViewModel.StartGame"/>.
+            Calls <see cref="M:Minesweeper.ViewModels.GameViewModel.Subscribe(Minesweeper.Model.MinesCore)"/>
+            Calls <see cref="M:Minesweeper.ViewModels.GameViewModel.FillTilesCollection"/>
+            </summary>
+        </member>
+        <member name="M:Minesweeper.ViewModels.GameViewModel.FillTilesCollection">
+            <summary>
+            Fills the TilesCollection random with bombs
+            </summary>
+        </member>
+        <member name="M:Minesweeper.ViewModels.GameViewModel.Reset">
+            <summary>
+            Clears <see cref="P:Minesweeper.ViewModels.GameViewModel.Tiles"/>, sets <see cref="F:Minesweeper.ViewModels.GameViewModel._isNotRunning"/> to true and
+            unsubscribes from MineCore Observer list
+            </summary>
+        </member>
+        <member name="M:Minesweeper.ViewModels.GameViewModel.Subscribe(Minesweeper.Model.MinesCore)">
+            <summary>
+            Subscribes to <paramref name="minesCore"/>
+            </summary>
+            <param name="minesCore">The Minescore Instance to subscribe to</param>
+        </member>
+        <member name="M:Minesweeper.ViewModels.GameViewModel.OnNext(Minesweeper.Model.MineData)">
+            <summary>
+            Get <see cref="T:Minesweeper.Model.MineData"/> and update the Properties of GameViewModel
+            If Minedata's GameOver Property is true the game will be resetted by calling <see cref="M:Minesweeper.ViewModels.GameViewModel.Reset"/>
+            </summary>
+            <param name="value">Newest MineData object</param>
+        </member>
+        <member name="T:Minesweeper.ViewModels.TileViewModel">
+            <summary>
+            ViewModel of a Tile
+            </summary>
+        </member>
+        <member name="P:Minesweeper.ViewModels.TileViewModel.Id">
+            <summary>
+            The unique identifier of the tile
+            </summary>
+        </member>
+        <member name="P:Minesweeper.ViewModels.TileViewModel.TileStateImage">
+            <summary>
+            The image displayed on the tile
+            </summary>
+        </member>
+        <member name="P:Minesweeper.ViewModels.TileViewModel.HasMine">
+            <summary>
+            Indicates if the Tile has a Mine
+            </summary>
+        </member>
+        <member name="M:Minesweeper.ViewModels.TileViewModel.#ctor">
+            <summary>
+            Gets the Initial Image for the Tiles
+            </summary>
+        </member>
+        <member name="P:Minesweeper.ViewModels.TileViewModel.ToggleButtonStateCommand">
+            <summary>
+            Calls <see cref="M:Minesweeper.ViewModels.TileViewModel.DoToggleButtonState"/> when a tile is left clicked
+            </summary>
+        </member>
+        <member name="P:Minesweeper.ViewModels.TileViewModel.MarkTile">
+            <summary>
+            Calls <see cref="M:Minesweeper.ViewModels.TileViewModel.DoMarkTile"/> if a Tile is right clicked
+            </summary>
+        </member>
+        <member name="T:Minesweeper.GameWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            GameWindow
+            </summary>
+        </member>
+        <member name="M:Minesweeper.GameWindow.#ctor">
+            <summary>
+            Standard Constructor of the main game view
+            </summary>
+        </member>
+        <member name="M:Minesweeper.GameWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Minesweeper.Tile">
+            <summary>
+            Interaction logic for Tile.xaml
+            </summary>
+            <summary>
+            Tile
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Tile.#ctor">
+            <summary>
+            Standard Constructor of the tile view
+            </summary>
+        </member>
+        <member name="M:Minesweeper.Tile.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

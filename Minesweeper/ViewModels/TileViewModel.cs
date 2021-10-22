@@ -1,4 +1,5 @@
 ﻿using Minesweeper.Commands;
+using Minesweeper.Enums;
 using Minesweeper.Model;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -8,15 +9,17 @@ namespace Minesweeper.ViewModels
     /// <summary>
     /// ViewModel of a Tile
     /// </summary>
-    public class TileViewModel: BindableBase
+    public class TileViewModel : BindableBase
     {
         #region Fields
-        private BitmapSource _tileStateImage;
-        private bool _hasBomb = false; 
 
-        #endregion
+        private byte[]_tileStateImage;
+        private bool _hasBomb;
+
+        #endregion Fields
 
         #region Properties
+
         /// <summary>
         /// The unique identifier of the tile
         /// </summary>
@@ -25,10 +28,10 @@ namespace Minesweeper.ViewModels
         /// <summary>
         /// The image displayed on the tile
         /// </summary>
-        public BitmapSource TileStateImage
+        public byte[] TileStateImage
         {
             get => _tileStateImage;
-            set => SetProperty(ref _tileStateImage, value);  
+            set => SetProperty(ref _tileStateImage, value);
         }
 
         /// <summary>
@@ -40,19 +43,22 @@ namespace Minesweeper.ViewModels
             set => SetProperty(ref _hasBomb, value);
         }
 
-        #endregion
+        #endregion Properties
 
         #region Constructor
+
         /// <summary>
         /// Gets the Initial Image for the Tiles
         /// </summary>
         public TileViewModel()
         {
-            TileStateImage = MinesCore.Instance.BitmapSources[StateImages.None];
+            TileStateImage = MinesCore.Instance.Images[StateImages.None];
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Commanding
+
         private ICommand _toggleButtonStateCommand;
         private ICommand _markTile;
 
@@ -72,6 +78,7 @@ namespace Minesweeper.ViewModels
                 return _toggleButtonStateCommand;
             }
         }
+
         /// <summary>
         /// Calls <see cref="DoMarkTile"/> if a Tile is right clicked
         /// </summary>
@@ -79,7 +86,7 @@ namespace Minesweeper.ViewModels
         {
             get
             {
-                if(_markTile == null)
+                if (_markTile == null)
                 {
                     _markTile = new RelayCommand(
                         p => CanMarkTile,
@@ -88,16 +95,20 @@ namespace Minesweeper.ViewModels
                 return _markTile;
             }
         }
-        #endregion
+
+        #endregion Commanding
 
         #region Methods
-        private bool CanToggleButtonState => true;
+
+        private static bool CanToggleButtonState => !MinesCore.Instance.GameOver;
+
         private void DoToggleButtonState()
         {
             if (HasMine)
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Explosion];
+                TileStateImage = MinesCore.Instance.Images[StateImages.Explosion];
                 MinesCore.Instance.GameLost();
+                
             }
             else
             {
@@ -105,24 +116,26 @@ namespace Minesweeper.ViewModels
             }
         }
 
-        private bool CanMarkTile => true;
+        private static bool CanMarkTile => true;
+
         private void DoMarkTile()
         {
-            if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.None])
+            if (TileStateImage == MinesCore.Instance.Images[StateImages.None])
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Flag];
+                TileStateImage = MinesCore.Instance.Images[StateImages.Flag];
                 MinesCore.Instance.FlaggedMinesCounter++;
             }
-            else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Flag])
+            else if (TileStateImage == MinesCore.Instance.Images[StateImages.Flag])
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.Questionmark];
+                TileStateImage = MinesCore.Instance.Images[StateImages.Questionmark];
                 MinesCore.Instance.FlaggedMinesCounter--;
             }
-            else if (TileStateImage == MinesCore.Instance.BitmapSources[StateImages.Questionmark])
+            else if (TileStateImage == MinesCore.Instance.Images[StateImages.Questionmark])
             {
-                TileStateImage = MinesCore.Instance.BitmapSources[StateImages.None];
+                TileStateImage = MinesCore.Instance.Images[StateImages.None];
             }
         }
-        #endregion
+
+        #endregion Methods
     }
 }

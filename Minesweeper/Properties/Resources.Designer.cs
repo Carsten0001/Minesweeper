@@ -22,7 +22,7 @@ namespace Minesweeper.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Minesweeper.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Minesweeper.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Minesweeper.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,142 +61,277 @@ namespace Minesweeper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Custom.
         /// </summary>
-        internal static System.Drawing.Bitmap Eight {
+        public static string Custom {
+            get {
+                return ResourceManager.GetString("Custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difficulty.
+        /// </summary>
+        public static string Difficulty {
+            get {
+                return ResourceManager.GetString("Difficulty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Easy.
+        /// </summary>
+        public static string Easy {
+            get {
+                return ResourceManager.GetString("Easy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Eight {
             get {
                 object obj = ResourceManager.GetObject("Eight", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Explosion {
+        public static byte[] Explosion {
             get {
                 object obj = ResourceManager.GetObject("Explosion", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to You LOOSE!!! Wanna Restart?.
         /// </summary>
-        internal static System.Drawing.Bitmap Five {
+        public static string Fail_Dialog_Text {
+            get {
+                return ResourceManager.GetString("Fail_Dialog_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatal Fail!.
+        /// </summary>
+        public static string Fail_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Fail_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Five {
             get {
                 object obj = ResourceManager.GetObject("Five", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Flag {
+        public static byte[] Flag {
             get {
                 object obj = ResourceManager.GetObject("Flag", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Four {
+        public static byte[] Four {
             get {
                 object obj = ResourceManager.GetObject("Four", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Game Mode.
         /// </summary>
-        internal static System.Drawing.Bitmap Mine {
+        public static string Game_Mode {
+            get {
+                return ResourceManager.GetString("Game_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hard.
+        /// </summary>
+        public static string Hard {
+            get {
+                return ResourceManager.GetString("Hard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Mine {
             get {
                 object obj = ResourceManager.GetObject("Mine", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap None {
+        public static byte[] None {
             get {
                 object obj = ResourceManager.GetObject("None", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Normal.
         /// </summary>
-        internal static System.Drawing.Bitmap Null {
+        public static string Normal {
+            get {
+                return ResourceManager.GetString("Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Null {
             get {
                 object obj = ResourceManager.GetObject("Null", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Number of Columns.
         /// </summary>
-        internal static System.Drawing.Bitmap One {
+        public static string Number_Of_Columns {
+            get {
+                return ResourceManager.GetString("Number_Of_Columns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Mines.
+        /// </summary>
+        public static string Number_Of_Mines {
+            get {
+                return ResourceManager.GetString("Number_Of_Mines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Rows.
+        /// </summary>
+        public static string Number_Of_Rows {
+            get {
+                return ResourceManager.GetString("Number_Of_Rows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] One {
             get {
                 object obj = ResourceManager.GetObject("One", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Questionmark {
+        public static byte[] Questionmark {
             get {
                 object obj = ResourceManager.GetObject("Questionmark", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Seven {
+        public static byte[] Seven {
             get {
                 object obj = ResourceManager.GetObject("Seven", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Six {
+        public static byte[] Six {
             get {
                 object obj = ResourceManager.GetObject("Six", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to Standard.
         /// </summary>
-        internal static System.Drawing.Bitmap Three {
+        public static string Standard {
+            get {
+                return ResourceManager.GetString("Standard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Start_Button {
+            get {
+                return ResourceManager.GetString("Start_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Three {
             get {
                 object obj = ResourceManager.GetObject("Three", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Two {
+        public static byte[] Two {
             get {
                 object obj = ResourceManager.GetObject("Two", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Win!!! Wanna Restart?.
+        /// </summary>
+        public static string Win_Dialog_Text {
+            get {
+                return ResourceManager.GetString("Win_Dialog_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awesome Job.
+        /// </summary>
+        public static string Win_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Win_Dialog_Title", resourceCulture);
             }
         }
     }

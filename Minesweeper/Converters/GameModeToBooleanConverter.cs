@@ -1,4 +1,5 @@
-﻿using Minesweeper.Model;
+﻿using Minesweeper.Enums;
+using Minesweeper.Model;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -8,7 +9,7 @@ namespace Minesweeper.Converters
     /// <summary>
     /// A Converter for a bool and a <see cref="GameMode"/>
     /// </summary>
-    class GameModeToBooleanConverter : IMultiValueConverter
+    internal class GameModeToBooleanConverter : IMultiValueConverter
     {
         /// <summary>
         /// Converts bool and GameMode to one bool output.
@@ -22,25 +23,11 @@ namespace Minesweeper.Converters
         {
             if ((string)parameter == "Difficulty")
             {
-                if((bool)values[0] == false || (GameMode)values[1] == GameMode.Custom)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return (bool)values[0] == false || (GameMode)values[1] == GameMode.Custom ? false : (object)true;
             }
             else
             {
-                if ((bool)values[0] == false || (GameMode)values[1] == GameMode.Standard)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return (bool)values[0] == false || (GameMode)values[1] == GameMode.Standard ? false : (object)true;
             }
         }
 
@@ -52,9 +39,6 @@ namespace Minesweeper.Converters
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns>null</returns>
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => null;
     }
 }

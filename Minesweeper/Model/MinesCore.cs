@@ -1,15 +1,13 @@
-﻿using Minesweeper.Properties;
+﻿using Minesweeper.Enums;
+using Minesweeper.Properties;
 using Minesweeper.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
 
 namespace Minesweeper.Model
 {
@@ -21,21 +19,25 @@ namespace Minesweeper.Model
     public sealed class MinesCore : IObservable<MineData>
     {
         #region Fields
+
         private static List<IObserver<MineData>> _observers;
         private static MineData _mineData;
-        private static readonly Lazy<MinesCore> _lazy = new Lazy<MinesCore>(() => new MinesCore());
+        private static readonly Lazy<MinesCore> _lazy = new(() => new MinesCore());
         private int _sizeX;
         private int _sizeY;
         private ObservableCollection<Tile> _tiles;
         private int _flaggedMinesCounter;
-        #endregion
 
-        #region Properties 
+        #endregion Fields
+
+        #region Properties
+
         /// <summary>
         /// Indicates if the game is over
         /// Default is true
         /// </summary>
         public bool GameOver { get; set; } = true;
+
         /// <summary>
         /// Number of Mines
         /// </summary>
@@ -60,10 +62,12 @@ namespace Minesweeper.Model
         /// <summary>
         /// A Collection of all the Images which can be displayed on a Tile
         /// </summary>
-        public Dictionary<StateImages, BitmapSource> BitmapSources { get; private set; }
-        #endregion
+        public Dictionary<StateImages, byte[]> Images { get; private set; }
+
+        #endregion Properties
 
         #region Constructors
+
         /// <summary>
         /// Returns the Instance of the MinesCore Singleton by lazy loading
         /// </summary>
@@ -81,22 +85,19 @@ namespace Minesweeper.Model
 
         private MinesCore()
         {
-            BitmapSources = new Dictionary<StateImages, BitmapSource>();
-            Dictionary<StateImages, Bitmap> images = Resources.ResourceManager
-                                       .GetResourceSet(CultureInfo.CurrentCulture, true, true)
+            Images = Resources.ResourceManager
+                                       .GetResourceSet(CultureInfo.InvariantCulture, true, true)
                                        .Cast<DictionaryEntry>()
-                                       .Where(x => x.Value.GetType() == typeof(Bitmap))
-                                       .ToDictionary(x => (StateImages)Enum.Parse(typeof(StateImages), x.Key.ToString()), x => x.Value as Bitmap);
-            foreach (var image in images)
-            {
-                BitmapSources.Add(image.Key, (Imaging.CreateBitmapSourceFromHBitmap(image.Value.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(image.Value.Width, image.Value.Height))));
-            }
+                                       .Where(x => x.Value.GetType() == typeof(byte[]))
+                                       .ToDictionary(x => (StateImages)Enum.Parse(typeof(StateImages), x.Key.ToString()), x => x.Value as byte[]);
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Methods
+
         /// <summary>
-        /// Starts the Game an initializes the List of Observers. 
+        /// Starts the Game an initializes the List of Observers.
         /// Calculates the size depended on GameMode and Difficulty.
         /// Calls <see cref="UpdateObservers()"/>
         /// </summary>
@@ -131,9 +132,11 @@ namespace Minesweeper.Model
                     case Difficulty.Easy:
                         NumberOfMines = 10;
                         break;
+
                     case Difficulty.Normal:
                         NumberOfMines = 40;
                         break;
+
                     case Difficulty.Hard:
                         NumberOfMines = 99;
                         break;
@@ -147,6 +150,7 @@ namespace Minesweeper.Model
             }
             UpdateObservers();
         }
+
         /// <summary>
         /// Informs the MineCore that the User has revealed a mine.
         /// </summary>
@@ -155,16 +159,17 @@ namespace Minesweeper.Model
             GameOver = true;
             foreach (Tile tile in _tiles)
             {
-                if ((tile.DataContext as TileViewModel).HasMine && (tile.DataContext as TileViewModel).TileStateImage == BitmapSources[StateImages.None])
-                    (tile.DataContext as TileViewModel).TileStateImage = BitmapSources[StateImages.Mine];
+                if ((tile.DataContext as TileViewModel).HasMine && (tile.DataContext as TileViewModel).TileStateImage == Images[StateImages.None])
+                    (tile.DataContext as TileViewModel).TileStateImage = Images[StateImages.Mine];
             }
-            var result = MessageBox.Show("You LOST!!! Wanna Restart?", "Fatal FAIL", MessageBoxButton.YesNo);
+            var result = MessageBox.Show(Resources.Fail_Dialog_Text, Resources.Fail_Dialog_Title, MessageBoxButton.YesNo);
             switch (result)
             {
                 case MessageBoxResult.Yes: UpdateObservers(); GameOver = false; break;
                 case MessageBoxResult.No:; break;
             }
         }
+
         /// <summary>
         /// Subscribs to Observer list
         /// </summary>
@@ -191,6 +196,7 @@ namespace Minesweeper.Model
                 observer.OnNext(_mineData);
             }
         }
+
         /// <summary>
         /// Calls <see cref="OpenField(int)"/> and checks if the player has won by calling <see cref="CheckIfWon"/>
         /// </summary>
@@ -207,7 +213,7 @@ namespace Minesweeper.Model
         /// <param name="id">id of the button that should be revealed</param>
         private void OpenField(int id)
         {
-            if ((_tiles[id].DataContext as TileViewModel).TileStateImage == BitmapSources[StateImages.Null])
+            if ((_tiles[id].DataContext as TileViewModel).TileStateImage == Images[StateImages.Null])
             {
                 return;
             }
@@ -217,7 +223,7 @@ namespace Minesweeper.Model
             if (id == 0)
             {
                 newID = CheckUpperLeftCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id + 1);
@@ -230,7 +236,7 @@ namespace Minesweeper.Model
             if (id % _sizeX > 0 && id % _sizeX < _sizeX - 1 && id < _sizeX)
             {
                 newID = CheckUpperMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - 1);
@@ -245,7 +251,7 @@ namespace Minesweeper.Model
             if (id == _sizeX - 1)
             {
                 newID = CheckUpperRightCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - 1);
@@ -258,7 +264,7 @@ namespace Minesweeper.Model
             if (id % _sizeX == 0 && id >= _sizeX && id < _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckLeftMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX);
@@ -273,7 +279,7 @@ namespace Minesweeper.Model
             if (id % _sizeX == _sizeX - 1 && id > _sizeX && id <= _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckRightMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX);
@@ -288,7 +294,7 @@ namespace Minesweeper.Model
             if (id == _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckBottomLeftCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX);
@@ -301,7 +307,7 @@ namespace Minesweeper.Model
             if (id % _sizeX > 0 && id % _sizeX < _sizeX - 1 && id > _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckBottomMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX - 1);
@@ -316,7 +322,7 @@ namespace Minesweeper.Model
             if (id == _sizeX * _sizeY - 1)
             {
                 newID = CheckBottomRightCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX - 1);
@@ -328,7 +334,7 @@ namespace Minesweeper.Model
             // Center Tiles
             {
                 newID = CheckCenter(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = BitmapSources[GetStateImage(newID)];
+                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX - 1);
@@ -607,14 +613,14 @@ namespace Minesweeper.Model
             var counter = 0;
             foreach (Tile tile in _tiles)
             {
-                if ((tile.DataContext as TileViewModel).HasMine == false && (tile.DataContext as TileViewModel).TileStateImage != BitmapSources[StateImages.None])
+                if ((tile.DataContext as TileViewModel).HasMine == false && (tile.DataContext as TileViewModel).TileStateImage != Images[StateImages.None])
                 {
                     counter++;
                 }
             }
             if (counter == _sizeX * _sizeY - NumberOfMines)
             {
-                var result = MessageBox.Show("You Win!!! Wanna Restart?", "Awesome Job", MessageBoxButton.YesNo);
+                var result = MessageBox.Show(Resources.Win_Dialog_Text, Resources.Win_Dialog_Title, MessageBoxButton.YesNo);
                 switch (result)
                 {
                     case MessageBoxResult.Yes: GameOver = false; _mineData = new MineData(NumberOfMines, FlaggedMinesCounter, _sizeX, _sizeY, GameOver); UpdateObservers(); break;
@@ -622,125 +628,26 @@ namespace Minesweeper.Model
                     default:; break;
                 }
             }
-
         }
 
-        private StateImages GetStateImage(int number)
+        private static StateImages GetStateImage(int number)
         {
-            switch (number)
+            return number switch
             {
-                case 0: return StateImages.Null;
-                case 1: return StateImages.One;
-                case 2: return StateImages.Two;
-                case 3: return StateImages.Three;
-                case 4: return StateImages.Four;
-                case 5: return StateImages.Five;
-                case 6: return StateImages.Six;
-                case 7: return StateImages.Seven;
-                case 8: return StateImages.Eight;
-                default: return StateImages.None;
-
-            }
+                0 => StateImages.Null,
+                1 => StateImages.One,
+                2 => StateImages.Two,
+                3 => StateImages.Three,
+                4 => StateImages.Four,
+                5 => StateImages.Five,
+                6 => StateImages.Six,
+                7 => StateImages.Seven,
+                8 => StateImages.Eight,
+                _ => StateImages.None,
+            };
         }
 
-        #endregion
-    }
-
-    /// <summary>
-    /// Difficulties which can be choosen from
-    /// </summary>
-    public enum Difficulty
-    {
-        /// <summary>
-        /// 8 X 8; 10 Mines
-        /// </summary>
-        Easy,
-        /// <summary>
-        /// 16 X 16; 40 Mines
-        /// </summary>
-        Normal,
-        /// <summary>
-        /// 16 X 30; 99 Mines
-        /// </summary>
-        Hard
-    }
-
-    /// <summary>
-    /// The two GameModes
-    /// </summary>
-    public enum GameMode
-    {
-        /// <summary>
-        /// Game will be built dependend on diffiulty choosen.
-        /// </summary>
-        Standard,
-        /// <summary>
-        /// Size and Number of Mines can be customized. Difficulty has no effect.
-        /// </summary>
-        Custom
-    }
-
-    /// <summary>
-    /// The Names of the Images which could be displayed on the Tiles
-    /// </summary>
-    public enum StateImages
-    {
-        /// <summary>
-        /// The Tile is revealed and has no Mine
-        /// </summary>
-        None,
-        /// <summary>
-        /// Initial State of Mine
-        /// </summary>
-        Null,
-        /// <summary>
-        /// The Tile is revealed and has one Mine
-        /// </summary>
-        One,
-        /// <summary>
-        /// The Tile is revealed and has two Mines
-        /// </summary>
-        Two,
-        /// <summary>
-        /// The Tile is revealed and has three Mines
-        /// </summary>
-        Three,
-        /// <summary>
-        /// The Tile is revealed and has four Mines
-        /// </summary>
-        Four,
-        /// <summary>
-        /// The Tile is revealed and has five Mines
-        /// </summary>
-        Five,
-        /// <summary>
-        /// The Tile is revealed and has six Mines
-        /// </summary>
-        Six,
-        /// <summary>
-        /// The Tile is revealed and has seven Mines
-        /// </summary>
-        Seven,
-        /// <summary>
-        /// The Tile is revealed and has eight Mines
-        /// </summary>
-        Eight,
-        /// <summary>
-        /// Tile right clicked once
-        /// </summary>
-        Flag,
-        /// <summary>
-        /// Tile right clicked twice
-        /// </summary>
-        Questionmark,
-        /// <summary>
-        /// The player has lost the game and Mine has been reveled automatically
-        /// </summary>
-        Mine,
-        /// <summary>
-        /// The player has clicked a Tile which has bomb
-        /// </summary>
-        Explosion
+        #endregion Methods
     }
 
     internal class Unsubscriber<MineData> : IDisposable
