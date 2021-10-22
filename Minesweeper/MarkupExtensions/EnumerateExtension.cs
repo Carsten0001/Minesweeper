@@ -1,5 +1,6 @@
 ﻿using Minesweeper.Properties;
 using System;
+using System.Globalization;
 using System.Windows.Markup;
 
 namespace Minesweeper.MarkupExtensions
@@ -35,7 +36,7 @@ namespace Minesweeper.MarkupExtensions
             string[] values = new string[names.Length];
 
             for (int i = 0; i < names.Length; i++)
-                values[i] = Resources.ResourceManager.GetString(names[i]);
+                values[i] = Resources.ResourceManager.GetString(names[i], CultureInfo.CurrentCulture);
 
             return values;
         }

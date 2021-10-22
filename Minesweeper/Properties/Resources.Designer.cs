@@ -108,6 +108,24 @@ namespace Minesweeper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You LOOSE!!! Wanna Restart?.
+        /// </summary>
+        public static string Fail_Dialog_Text {
+            get {
+                return ResourceManager.GetString("Fail_Dialog_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatal Fail!.
+        /// </summary>
+        public static string Fail_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Fail_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] Five {
@@ -296,6 +314,24 @@ namespace Minesweeper.Properties {
             get {
                 object obj = ResourceManager.GetObject("Two", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Win!!! Wanna Restart?.
+        /// </summary>
+        public static string Win_Dialog_Text {
+            get {
+                return ResourceManager.GetString("Win_Dialog_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awesome Job.
+        /// </summary>
+        public static string Win_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Win_Dialog_Title", resourceCulture);
             }
         }
     }

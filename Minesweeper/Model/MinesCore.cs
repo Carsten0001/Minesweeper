@@ -5,12 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
 
 namespace Minesweeper.Model
 {
@@ -89,7 +86,7 @@ namespace Minesweeper.Model
         private MinesCore()
         {
             Images = Resources.ResourceManager
-                                       .GetResourceSet(CultureInfo.CurrentCulture, true, true)
+                                       .GetResourceSet(CultureInfo.InvariantCulture, true, true)
                                        .Cast<DictionaryEntry>()
                                        .Where(x => x.Value.GetType() == typeof(byte[]))
                                        .ToDictionary(x => (StateImages)Enum.Parse(typeof(StateImages), x.Key.ToString()), x => x.Value as byte[]);
@@ -165,7 +162,7 @@ namespace Minesweeper.Model
                 if ((tile.DataContext as TileViewModel).HasMine && (tile.DataContext as TileViewModel).TileStateImage == Images[StateImages.None])
                     (tile.DataContext as TileViewModel).TileStateImage = Images[StateImages.Mine];
             }
-            var result = MessageBox.Show("You LOST!!! Wanna Restart?", "Fatal FAIL", MessageBoxButton.YesNo);
+            var result = MessageBox.Show(Resources.Fail_Dialog_Text, Resources.Fail_Dialog_Title, MessageBoxButton.YesNo);
             switch (result)
             {
                 case MessageBoxResult.Yes: UpdateObservers(); GameOver = false; break;
@@ -623,7 +620,7 @@ namespace Minesweeper.Model
             }
             if (counter == _sizeX * _sizeY - NumberOfMines)
             {
-                var result = MessageBox.Show("You Win!!! Wanna Restart?", "Awesome Job", MessageBoxButton.YesNo);
+                var result = MessageBox.Show(Resources.Win_Dialog_Text, Resources.Win_Dialog_Title, MessageBoxButton.YesNo);
                 switch (result)
                 {
                     case MessageBoxResult.Yes: GameOver = false; _mineData = new MineData(NumberOfMines, FlaggedMinesCounter, _sizeX, _sizeY, GameOver); UpdateObservers(); break;

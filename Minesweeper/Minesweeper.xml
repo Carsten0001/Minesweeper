@@ -414,6 +414,16 @@
               Looks up a localized resource of type System.Byte[].
             </summary>
         </member>
+        <member name="P:Minesweeper.Properties.Resources.Fail_Dialog_Text">
+            <summary>
+              Looks up a localized string similar to You LOOSE!!! Wanna Restart?.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Fail_Dialog_Title">
+            <summary>
+              Looks up a localized string similar to Fatal Fail!.
+            </summary>
+        </member>
         <member name="P:Minesweeper.Properties.Resources.Five">
             <summary>
               Looks up a localized resource of type System.Byte[].
@@ -512,6 +522,16 @@
         <member name="P:Minesweeper.Properties.Resources.Two">
             <summary>
               Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Win_Dialog_Text">
+            <summary>
+              Looks up a localized string similar to You Win!!! Wanna Restart?.
+            </summary>
+        </member>
+        <member name="P:Minesweeper.Properties.Resources.Win_Dialog_Title">
+            <summary>
+              Looks up a localized string similar to Awesome Job.
             </summary>
         </member>
         <member name="T:Minesweeper.Validators.FieldHeightWidthRule">

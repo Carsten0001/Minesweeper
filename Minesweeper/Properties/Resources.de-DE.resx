@@ -117,92 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Eight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\eight.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Explosion" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\explosion.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Five" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\five.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Flag" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\flag.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Four" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\four.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Mine" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\mine.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="None" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\none.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Null" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\null.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="One" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\one.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Questionmark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\questionmark.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Seven" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\seven.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Six" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\six.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Three" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\three.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Two" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\two.bmp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Custom" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
   </data>
   <data name="Start_Button" xml:space="preserve">
     <value>Start</value>
   </data>
   <data name="Game_Mode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Spiel Modus</value>
   </data>
   <data name="Difficulty" xml:space="preserve">
-    <value>Difficulty</value>
+    <value>Schwierigkeitsgrad</value>
   </data>
   <data name="Number_Of_Rows" xml:space="preserve">
-    <value>Number of Rows</value>
+    <value>Anzahl der Zeilen</value>
   </data>
   <data name="Number_Of_Columns" xml:space="preserve">
-    <value>Number of Columns</value>
+    <value>Anzahl der Spalten</value>
   </data>
   <data name="Number_Of_Mines" xml:space="preserve">
-    <value>Number of Mines</value>
+    <value>Anzahl der Minen</value>
   </data>
   <data name="Standard" xml:space="preserve">
     <value>Standard</value>
-  </data>
-  <data name="Custom" xml:space="preserve">
-    <value>Custom</value>
   </data>
   <data name="Normal" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="Easy" xml:space="preserve">
-    <value>Easy</value>
+    <value>Einfach</value>
   </data>
   <data name="Hard" xml:space="preserve">
-    <value>Hard</value>
+    <value>Schwer</value>
   </data>
   <data name="Fail_Dialog_Title" xml:space="preserve">
-    <value>Fatal Fail!</value>
+    <value>Verloren!</value>
   </data>
   <data name="Fail_Dialog_Text" xml:space="preserve">
-    <value>You LOOSE!!! Wanna Restart?</value>
+    <value>Du VERLIERST!!! Neustarten?</value>
   </data>
   <data name="Win_Dialog_Title" xml:space="preserve">
-    <value>Awesome Job</value>
+    <value>Gute Arbeit</value>
   </data>
   <data name="Win_Dialog_Text" xml:space="preserve">
-    <value>You Win!!! Wanna Restart?</value>
+    <value>Du hast gewonnen!!! Nochmal?</value>
   </data>
 </root>

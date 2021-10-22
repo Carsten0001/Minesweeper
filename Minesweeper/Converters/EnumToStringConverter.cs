@@ -20,7 +20,7 @@ namespace Minesweeper.Converters
         /// <returns>Localized string of enum value</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? null : Resources.ResourceManager.GetString(value.ToString(), culture);
+            return value == null ? null : Resources.ResourceManager.GetString(value.ToString(), CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Minesweeper.Converters
 
             foreach (object enumValue in Enum.GetValues(targetType))
             {
-                if (str == Resources.ResourceManager.GetString(enumValue.ToString(), culture))
+                if (str == Resources.ResourceManager.GetString(enumValue.ToString(), CultureInfo.CurrentCulture))
                     return enumValue;
             }
 
