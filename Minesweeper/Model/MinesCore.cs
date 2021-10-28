@@ -125,7 +125,7 @@ namespace Minesweeper.Model
             }
             _tiles = tiles;
 
-            if (gameMode == GameMode.Standard && GameOver)
+            if (gameMode == GameMode.Standard)
             {
                 switch (difficulty)
                 {
@@ -143,7 +143,7 @@ namespace Minesweeper.Model
                 }
                 GameOver = false;
             }
-            else if (gameMode == GameMode.Custom && GameOver && numberOfMines != null)
+            if (gameMode == GameMode.Custom && GameOver && numberOfMines != null)
             {
                 NumberOfMines = numberOfMines.Value;
                 GameOver = false;
