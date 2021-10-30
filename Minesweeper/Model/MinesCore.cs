@@ -92,9 +92,21 @@ namespace Minesweeper.Model
                                        .ToDictionary(x => (StateImages)Enum.Parse(typeof(StateImages), x.Key.ToString()), x => x.Value as byte[]);
         }
 
+
         #endregion Constructors
 
         #region Methods
+
+        /// <summary>
+        /// Inits the Game with default properties.
+        /// </summary>
+        /// <param name="tiles">Tiles list to initialize.</param>
+        internal void InitGame(ref ObservableCollection<Tile> tiles)
+        {
+            SetStandardGameProperties(Difficulty.Normal);
+            _tiles = tiles;
+            UpdateObservers();
+        }
 
         /// <summary>
         /// Starts the Game an initializes the List of Observers.
@@ -107,54 +119,44 @@ namespace Minesweeper.Model
         /// <param name="sizeY"></param>
         /// <param name="numberOfMines"></param>
         /// <param name="tiles"></param>
-        public void StartGame(GameMode gameMode, Difficulty difficulty, int sizeX, int sizeY, int? numberOfMines, ref ObservableCollection<Tile> tiles)
+        internal void StartGame(GameMode gameMode, Difficulty difficulty, int sizeX, int sizeY, int numberOfMines, ref ObservableCollection<Tile> tiles)
         {
             if (gameMode == GameMode.Standard)
             {
-                switch (difficulty)
-                {
-                    case Difficulty.Easy: _sizeX = _sizeY = 8; break;
-                    case Difficulty.Normal: _sizeX = _sizeY = 16; break;
-                    case Difficulty.Hard: _sizeX = 30; _sizeY = 16; break;
-                }
+                SetStandardGameProperties(difficulty);
             }
             else
             {
                 _sizeX = sizeX;
                 _sizeY = sizeY;
+                NumberOfMines = numberOfMines;
             }
             _tiles = tiles;
 
-            if (gameMode == GameMode.Standard)
-            {
-                switch (difficulty)
-                {
-                    case Difficulty.Easy:
-                        NumberOfMines = 10;
-                        break;
 
-                    case Difficulty.Normal:
-                        NumberOfMines = 40;
-                        break;
-
-                    case Difficulty.Hard:
-                        NumberOfMines = 99;
-                        break;
-                }
-                GameOver = false;
-            }
-            if (gameMode == GameMode.Custom && GameOver && numberOfMines != null)
-            {
-                NumberOfMines = numberOfMines.Value;
-                GameOver = false;
-            }
+            GameOver = false;
             UpdateObservers();
+        }
+
+
+        /// <summary>
+        /// Sets the size of the game field and the number of mines based on difficulty level.
+        /// </summary>
+        /// <param name="difficulty">The defined difficulty</param>
+        private void SetStandardGameProperties(Difficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Easy: _sizeX = _sizeY = 8; NumberOfMines = 10; break;
+                case Difficulty.Normal: _sizeX = _sizeY = 16; NumberOfMines = 40; break;
+                case Difficulty.Hard: _sizeX = 30; _sizeY = 16; NumberOfMines = 99; break;
+            }
         }
 
         /// <summary>
         /// Informs the MineCore that the User has revealed a mine.
         /// </summary>
-        public void GameLost()
+        internal void GameLost()
         {
             GameOver = true;
             foreach (Tile tile in _tiles)
@@ -165,9 +167,15 @@ namespace Minesweeper.Model
             var result = MessageBox.Show(Resources.Fail_Dialog_Text, Resources.Fail_Dialog_Title, MessageBoxButton.YesNo);
             switch (result)
             {
-                case MessageBoxResult.Yes: UpdateObservers(); GameOver = false; break;
+                case MessageBoxResult.Yes: UpdateObservers(); break;
                 case MessageBoxResult.No:; break;
             }
+        }
+
+        internal void ChangeSize(Difficulty selectedDifficulty)
+        {
+            SetStandardGameProperties(selectedDifficulty);
+            UpdateObservers();
         }
 
         /// <summary>
@@ -201,7 +209,7 @@ namespace Minesweeper.Model
         /// Calls <see cref="OpenField(int)"/> and checks if the player has won by calling <see cref="CheckIfWon"/>
         /// </summary>
         /// <param name="id"></param>
-        public void RevealFieldAndCheckForWin(int id)
+        internal void RevealFieldAndCheckForWin(int id)
         {
             OpenField(id);
             CheckIfWon();
@@ -623,7 +631,7 @@ namespace Minesweeper.Model
                 var result = MessageBox.Show(Resources.Win_Dialog_Text, Resources.Win_Dialog_Title, MessageBoxButton.YesNo);
                 switch (result)
                 {
-                    case MessageBoxResult.Yes: GameOver = false; _mineData = new MineData(NumberOfMines, FlaggedMinesCounter, _sizeX, _sizeY, GameOver); UpdateObservers(); break;
+                    case MessageBoxResult.Yes: GameOver = true; UpdateObservers(); break;
                     case MessageBoxResult.No:; break;
                     default:; break;
                 }

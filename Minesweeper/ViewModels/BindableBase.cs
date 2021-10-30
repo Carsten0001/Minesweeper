@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Minesweeper.ViewModels
@@ -18,8 +19,10 @@ namespace Minesweeper.ViewModels
         ///     notifies listeners only when necessary.
         /// </summary>
         /// <typeparam name="T">Type of the property.</typeparam>
-        /// <param name="storage">Reference to a property with both getter and setter.</param>
+        /// <param name="backingStore">Reference to a property with both getter and setter.</param>
         /// <param name="value">Desired value for the property.</param>
+        /// <param name="changed">Action called after property changed.</param>
+        /// <param name="canChange">Func which determines if the property can be changed.</param>
         /// <param name="propertyName">
         ///     Name of the property used to notify listeners.  This
         ///     value is optional and can be provided automatically when invoked from compilers that
@@ -29,16 +32,20 @@ namespace Minesweeper.ViewModels
         ///     True if the value was changed, false if the existing value matched the
         ///     desired value.
         /// </returns>
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        protected bool SetProperty<T>(ref T backingStore, T value, Action changed = null, Func<bool> canChange = null, [CallerMemberName] string propertyName = null)
         {
-            if (Equals(storage, value))
-            {
+            if (Equals(backingStore, value))
                 return false;
+
+            if (canChange?.Invoke() ?? true)
+            {
+                backingStore = value;
+                OnPropertyChanged(propertyName);
+                changed?.Invoke();
+                return true;
             }
 
-            storage = value;
-            this.OnPropertyChanged(propertyName);
-            return true;
+            return false;
         }
 
         /// <summary>
