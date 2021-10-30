@@ -103,7 +103,7 @@ namespace Minesweeper.ViewModels
         public Difficulty SelectedDifficulty
         {
             get => _selectedDifficulty;
-            set => SetProperty(ref _selectedDifficulty, value);
+            set => SetProperty(ref _selectedDifficulty, value, () => MinesCore.Instance.ChangeSize(SelectedDifficulty));
         }
 
         #endregion Properties
@@ -132,7 +132,8 @@ namespace Minesweeper.ViewModels
 
         public GameViewModel()
         {
-            MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
+            _tiles = new ObservableCollection<Tile>();
+            MinesCore.Instance.InitGame(ref _tiles);
             Subscribe(MinesCore.Instance);
         }
 
@@ -147,11 +148,9 @@ namespace Minesweeper.ViewModels
             {
                 Unsubscribe();
             }
-            Tiles = new ObservableCollection<Tile>();
 
             MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
             Subscribe(MinesCore.Instance);
-            //FlaggedMinesCounter = NumberOfMines;
             FillTilesCollection();
 
             IsNotRunning = false;
@@ -185,14 +184,12 @@ namespace Minesweeper.ViewModels
         }
 
         /// <summary>
-        /// Clears <see cref="Tiles"/>, sets <see cref="_isNotRunning"/> to true and
-        /// unsubscribes from MineCore Observer list
+        /// Clears <see cref="Tiles"/>, sets <see cref="_isNotRunning"/> to true
         /// </summary>
         private void Reset()
         {
             Tiles.Clear();
             IsNotRunning = true;
-            //Unsubscribe();
         }
 
         /// <summary>
@@ -218,7 +215,7 @@ namespace Minesweeper.ViewModels
         {
             NumberOfMines = value.NumberOfMines;
             FlaggedMinesCounter = value.RemainingMines;
-            IsNotRunning = !value.GameOver;
+            IsNotRunning = value.GameOver;
             SizeX = value.SizeX;
             SizeY = value.SizeY;
             if (value.GameOver)
@@ -238,7 +235,7 @@ namespace Minesweeper.ViewModels
             throw new NotImplementedException();
         }
 
-        private bool CanStartGame => SizeX > 0 && SizeX <= 28 && SizeY > 0 && SizeY <= 28;
+        private bool CanStartGame => SizeX > 0 && SizeX <= 30 && SizeY > 0 && SizeY <= 28;
 
         #endregion Methods
     }

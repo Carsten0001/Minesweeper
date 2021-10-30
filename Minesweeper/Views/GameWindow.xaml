@@ -122,7 +122,7 @@
                         <Binding Mode="TwoWay" Path="SizeY">
                             <Binding.ValidationRules>
                                 <c:FieldHeightWidthRule
-                                    Max="28"
+                                    Max="26"
                                     Min="1"
                                     ValidationStep="CommittedValue" />
                             </Binding.ValidationRules>
@@ -149,7 +149,7 @@
                         <Binding Mode="TwoWay" Path="SizeX">
                             <Binding.ValidationRules>
                                 <c:FieldHeightWidthRule
-                                    Max="28"
+                                    Max="30"
                                     Min="1"
                                     ValidationStep="CommittedValue" />
                             </Binding.ValidationRules>
