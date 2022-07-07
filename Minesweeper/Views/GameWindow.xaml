@@ -17,7 +17,7 @@
     SnapsToDevicePixels="True"
     mc:Ignorable="d">
     <Window.DataContext>
-        <ViewModel:GameViewModel />
+        <ViewModel:GameWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
         <Converter:GameModeToBooleanConverter x:Key="GameModeToBooleanConverter" />

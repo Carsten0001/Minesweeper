@@ -1,4 +1,5 @@
 ﻿using Minesweeper.Enums;
+using Minesweeper.Manager;
 using Minesweeper.Properties;
 using Minesweeper.ViewModels;
 using System;
@@ -16,16 +17,17 @@ namespace Minesweeper.Model
     /// Mediator for the ViewModels
     /// Holds all the values, which are nessecary for the game
     /// </summary>
-    public sealed class MinesCore : IObservable<MineData>
+    public sealed class MinesCore : BindableBase, IObservable<MineData>
     {
         #region Fields
 
         private static List<IObserver<MineData>> _observers;
         private static MineData _mineData;
         private static readonly Lazy<MinesCore> _lazy = new(() => new MinesCore());
+        private readonly SoundManager _soundManager;
+        private ObservableCollection<Tile> _tiles;
         private int _sizeX;
         private int _sizeY;
-        private ObservableCollection<Tile> _tiles;
         private int _flaggedMinesCounter;
 
         #endregion Fields
@@ -60,6 +62,15 @@ namespace Minesweeper.Model
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public ObservableCollection<Tile> Tiles
+        {
+            get => _tiles ??= new ObservableCollection<Tile>();
+            set => SetProperty(ref _tiles, value);
+        }
+
+        /// <summary>
         /// A Collection of all the Images which can be displayed on a Tile
         /// </summary>
         public Dictionary<StateImages, byte[]> Images { get; private set; }
@@ -90,6 +101,8 @@ namespace Minesweeper.Model
                                        .Cast<DictionaryEntry>()
                                        .Where(x => x.Value.GetType() == typeof(byte[]))
                                        .ToDictionary(x => (StateImages)Enum.Parse(typeof(StateImages), x.Key.ToString()), x => x.Value as byte[]);
+
+            _soundManager = new SoundManager();
         }
 
 
@@ -100,11 +113,9 @@ namespace Minesweeper.Model
         /// <summary>
         /// Inits the Game with default properties.
         /// </summary>
-        /// <param name="tiles">Tiles list to initialize.</param>
-        internal void InitGame(ref ObservableCollection<Tile> tiles)
+        internal void InitGame()
         {
             SetStandardGameProperties(Difficulty.Normal);
-            _tiles = tiles;
             UpdateObservers();
         }
 
@@ -118,8 +129,7 @@ namespace Minesweeper.Model
         /// <param name="sizeX"></param>
         /// <param name="sizeY"></param>
         /// <param name="numberOfMines"></param>
-        /// <param name="tiles"></param>
-        internal void StartGame(GameMode gameMode, Difficulty difficulty, int sizeX, int sizeY, int numberOfMines, ref ObservableCollection<Tile> tiles)
+        internal void StartGame(GameMode gameMode, Difficulty difficulty, int sizeX, int sizeY, int numberOfMines)
         {
             if (gameMode == GameMode.Standard)
             {
@@ -131,13 +141,37 @@ namespace Minesweeper.Model
                 _sizeY = sizeY;
                 NumberOfMines = numberOfMines;
             }
-            _tiles = tiles;
-
 
             GameOver = false;
             UpdateObservers();
         }
 
+
+        /// <summary>
+        /// Fills the TilesCollection random with bombs
+        /// </summary>
+        public void FillTilesCollection()
+        {
+            var random = new Random();
+            var MinesCounter = NumberOfMines;
+            var totalSize = _sizeX * _sizeY;
+
+            for (int i = 0; i < totalSize; i++)
+            {
+                var tile = new Tile();
+                (tile.DataContext as TileViewModel).Id = i;
+                Tiles.Add(tile);
+            }
+            while (MinesCounter > 0)
+            {
+                var randomNumber = random.Next(totalSize);
+                if (!(Tiles[randomNumber].DataContext as TileViewModel).HasMine)
+                {
+                    (Tiles[randomNumber].DataContext as TileViewModel).HasMine = true;
+                    MinesCounter--;
+                }
+            }
+        }
 
         /// <summary>
         /// Sets the size of the game field and the number of mines based on difficulty level.
@@ -153,13 +187,19 @@ namespace Minesweeper.Model
             }
         }
 
+        internal void Explosion()
+        {
+            _soundManager.PlayExplosion();
+        }
+
         /// <summary>
         /// Informs the MineCore that the User has revealed a mine.
         /// </summary>
         internal void GameLost()
         {
+            
             GameOver = true;
-            foreach (Tile tile in _tiles)
+            foreach (Tile tile in Tiles)
             {
                 if ((tile.DataContext as TileViewModel).HasMine && (tile.DataContext as TileViewModel).TileStateImage == Images[StateImages.None])
                     (tile.DataContext as TileViewModel).TileStateImage = Images[StateImages.Mine];
@@ -167,8 +207,11 @@ namespace Minesweeper.Model
             var result = MessageBox.Show(Resources.Fail_Dialog_Text, Resources.Fail_Dialog_Title, MessageBoxButton.YesNo);
             switch (result)
             {
-                case MessageBoxResult.Yes: UpdateObservers(); break;
-                case MessageBoxResult.No:; break;
+                case MessageBoxResult.Yes: 
+                    Tiles.Clear();
+                    UpdateObservers(); 
+                    break;
+                case MessageBoxResult.No: /* Do nothing */; break;
             }
         }
 
@@ -221,7 +264,7 @@ namespace Minesweeper.Model
         /// <param name="id">id of the button that should be revealed</param>
         private void OpenField(int id)
         {
-            if ((_tiles[id].DataContext as TileViewModel).TileStateImage == Images[StateImages.Null])
+            if ((Tiles[id].DataContext as TileViewModel).TileStateImage == Images[StateImages.Null])
             {
                 return;
             }
@@ -231,7 +274,7 @@ namespace Minesweeper.Model
             if (id == 0)
             {
                 newID = CheckUpperLeftCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id + 1);
@@ -244,7 +287,7 @@ namespace Minesweeper.Model
             if (id % _sizeX > 0 && id % _sizeX < _sizeX - 1 && id < _sizeX)
             {
                 newID = CheckUpperMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - 1);
@@ -259,7 +302,7 @@ namespace Minesweeper.Model
             if (id == _sizeX - 1)
             {
                 newID = CheckUpperRightCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - 1);
@@ -272,7 +315,7 @@ namespace Minesweeper.Model
             if (id % _sizeX == 0 && id >= _sizeX && id < _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckLeftMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX);
@@ -287,7 +330,7 @@ namespace Minesweeper.Model
             if (id % _sizeX == _sizeX - 1 && id > _sizeX && id <= _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckRightMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX);
@@ -302,7 +345,7 @@ namespace Minesweeper.Model
             if (id == _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckBottomLeftCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX);
@@ -315,7 +358,7 @@ namespace Minesweeper.Model
             if (id % _sizeX > 0 && id % _sizeX < _sizeX - 1 && id > _sizeX * _sizeY - _sizeX)
             {
                 newID = CheckBottomMid(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX - 1);
@@ -330,7 +373,7 @@ namespace Minesweeper.Model
             if (id == _sizeX * _sizeY - 1)
             {
                 newID = CheckBottomRightCorner(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX - 1);
@@ -342,7 +385,7 @@ namespace Minesweeper.Model
             // Center Tiles
             {
                 newID = CheckCenter(id);
-                (_tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
+                (Tiles[id].DataContext as TileViewModel).TileStateImage = Images[GetStateImage(newID)];
                 if (newID == 0)
                 {
                     OpenField(id - _sizeX - 1);
@@ -365,15 +408,15 @@ namespace Minesweeper.Model
         private int CheckUpperLeftCorner(int id)
         {
             var counter = 0;
-            if ((_tiles[id + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -388,23 +431,23 @@ namespace Minesweeper.Model
         private int CheckUpperMid(int id)
         {
             var counter = 0;
-            if ((_tiles[id - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -419,15 +462,15 @@ namespace Minesweeper.Model
         private int CheckUpperRightCorner(int id)
         {
             var counter = 0;
-            if ((_tiles[id - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -442,23 +485,23 @@ namespace Minesweeper.Model
         private int CheckLeftMid(int id)
         {
             var counter = 0;
-            if ((_tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -473,23 +516,23 @@ namespace Minesweeper.Model
         private int CheckRightMid(int id)
         {
             var counter = 0;
-            if ((_tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -504,15 +547,15 @@ namespace Minesweeper.Model
         private int CheckBottomLeftCorner(int id)
         {
             var counter = 0;
-            if ((_tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -527,23 +570,23 @@ namespace Minesweeper.Model
         private int CheckBottomMid(int id)
         {
             var counter = 0;
-            if ((_tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -558,15 +601,15 @@ namespace Minesweeper.Model
         private int CheckBottomRightCorner(int id)
         {
             var counter = 0;
-            if ((_tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -581,35 +624,35 @@ namespace Minesweeper.Model
         private int CheckCenter(int id)
         {
             var counter = 0;
-            if ((_tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX - 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
-            if ((_tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
+            if ((Tiles[id + _sizeX + 1].DataContext as TileViewModel).HasMine)
             {
                 counter++;
             }
@@ -619,7 +662,7 @@ namespace Minesweeper.Model
         private void CheckIfWon()
         {
             var counter = 0;
-            foreach (Tile tile in _tiles)
+            foreach (Tile tile in Tiles)
             {
                 if ((tile.DataContext as TileViewModel).HasMine == false && (tile.DataContext as TileViewModel).TileStateImage != Images[StateImages.None])
                 {

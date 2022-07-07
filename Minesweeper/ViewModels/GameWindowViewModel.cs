@@ -10,7 +10,7 @@ namespace Minesweeper.ViewModels
     /// <summary>
     /// The ViewModel auf the MainGameView
     /// </summary>
-    internal class GameViewModel : BindableBase, IObserver<MineData>
+    internal class GameWindowViewModel : BindableBase, IObserver<MineData>
     {
         #region Fields
 
@@ -22,7 +22,6 @@ namespace Minesweeper.ViewModels
         private int _flaggedMinesCounter = 0;
         private bool _isNotRunning = true;
         private bool _isPlaygroundUnlocked = true;
-        private ObservableCollection<Tile> _tiles;
         private ObservableCollection<GameMode> _gameModes;
         private GameMode _selectedGameMode = GameMode.Standard;
         private Difficulty _selectedDifficulty = Difficulty.Normal;
@@ -82,11 +81,7 @@ namespace Minesweeper.ViewModels
             set => SetProperty(ref _isPlaygroundUnlocked, value);
         }
 
-        public ObservableCollection<Tile> Tiles
-        {
-            get => _tiles;
-            set => SetProperty(ref _tiles, value);
-        }
+        public ObservableCollection<Tile> Tiles => MinesCore.Instance.Tiles;
 
         public ObservableCollection<GameMode> GameModes
         {
@@ -130,17 +125,16 @@ namespace Minesweeper.ViewModels
 
         #region Methods
 
-        public GameViewModel()
+        public GameWindowViewModel()
         {
-            _tiles = new ObservableCollection<Tile>();
-            MinesCore.Instance.InitGame(ref _tiles);
+            MinesCore.Instance.InitGame();
             Subscribe(MinesCore.Instance);
         }
 
         /// <summary>
         /// Starts the Game. Calls <see cref="StartGame()"/>.
         /// Calls <see cref="Subscribe(MinesCore)"/>
-        /// Calls <see cref="FillTilesCollection"/>
+        /// Calls <see cref="MinesCore.FillTilesCollection"/>
         /// </summary>
         protected void DoStartGame()
         {
@@ -149,39 +143,14 @@ namespace Minesweeper.ViewModels
                 Unsubscribe();
             }
 
-            MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines, ref _tiles);
+            MinesCore.Instance.StartGame(SelectedGameMode, SelectedDifficulty, SizeX, SizeY, NumberOfMines);
             Subscribe(MinesCore.Instance);
-            FillTilesCollection();
+            MinesCore.Instance.FillTilesCollection();
 
             IsNotRunning = false;
             _isPlaygroundUnlocked = true;
         }
 
-        /// <summary>
-        /// Fills the TilesCollection random with bombs
-        /// </summary>
-        private void FillTilesCollection()
-        {
-            var random = new Random();
-            var MinesCounter = NumberOfMines;
-            var totalSize = SizeX * SizeY;
-
-            for (int i = 0; i < totalSize; i++)
-            {
-                var tile = new Tile();
-                (tile.DataContext as TileViewModel).Id = i;
-                Tiles.Add(tile);
-            }
-            while (MinesCounter > 0)
-            {
-                var randomNumber = random.Next(totalSize);
-                if (!(Tiles[randomNumber].DataContext as TileViewModel).HasMine)
-                {
-                    (Tiles[randomNumber].DataContext as TileViewModel).HasMine = true;
-                    MinesCounter--;
-                }
-            }
-        }
 
         /// <summary>
         /// Clears <see cref="Tiles"/>, sets <see cref="_isNotRunning"/> to true
