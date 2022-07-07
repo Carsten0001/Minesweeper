@@ -1,4 +1,4 @@
-﻿using Minesweeper.Properties;
+using Minesweeper.Properties;
 using System;
 using System.ComponentModel;
 using System.Media;
@@ -30,9 +30,14 @@ namespace Minesweeper.Manager
             _soundPlayer.LoadAsync();
         }
 
-        public void PlayExplosion()
+        public void PlayExplosionSound()
         {
             _soundPlayer.Stream = Resources.Explosion1;
+        }
+
+        public void PlayRevealTileSound()
+        {
+            _soundPlayer.Stream = Resources.Tab;
         }
 
         public void Dispose()

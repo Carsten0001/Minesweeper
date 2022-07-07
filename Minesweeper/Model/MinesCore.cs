@@ -187,17 +187,12 @@ namespace Minesweeper.Model
             }
         }
 
-        internal void Explosion()
-        {
-            _soundManager.PlayExplosion();
-        }
-
         /// <summary>
         /// Informs the MineCore that the User has revealed a mine.
         /// </summary>
         internal void GameLost()
         {
-            
+            _soundManager.PlayExplosionSound();
             GameOver = true;
             foreach (Tile tile in Tiles)
             {
@@ -254,6 +249,7 @@ namespace Minesweeper.Model
         /// <param name="id"></param>
         internal void RevealFieldAndCheckForWin(int id)
         {
+            _soundManager.PlayRevealTileSound();
             OpenField(id);
             CheckIfWon();
         }
