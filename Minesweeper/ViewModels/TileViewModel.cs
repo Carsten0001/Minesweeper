@@ -106,6 +106,7 @@ namespace Minesweeper.ViewModels
         {
             if (HasMine)
             {
+                MinesCore.Instance.Explosion();
                 TileStateImage = MinesCore.Instance.Images[StateImages.Explosion];
                 MinesCore.Instance.GameLost();
                 
