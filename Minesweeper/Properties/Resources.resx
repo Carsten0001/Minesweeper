@@ -205,4 +205,7 @@
   <data name="Win_Dialog_Text" xml:space="preserve">
     <value>You Win!!! Wanna Restart?</value>
   </data>
+  <data name="Explosion1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\explosion.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
