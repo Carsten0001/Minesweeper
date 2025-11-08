@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Minesweeper/Minesweeper.csproj" />
+  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
+    <Property Name="RESX_PrefixTranslations" Value="False" />
+  </Properties>
+</Solution>
